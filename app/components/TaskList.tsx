@@ -1,17 +1,19 @@
-"use client";
+// app/components/TaskList.tsx
+"use client"; // Marking the component as a Client Component
 
 import { useEffect, useState } from "react";
-import { getTasks, addTask, deleteTask } from "../services/taskService"; // Corrected path
-import { Task } from "../models/task"; // Corrected path
+import { getTasks, addTask, deleteTask } from "../services/taskService";
+import { Task } from "../models/task";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
+  const [taskProof, setTaskProof] = useState<File | null>(null); // State for the uploaded proof file
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const fetchedTasks: Task[] = await getTasks(); // Explicitly typed
-      setTasks(fetchedTasks); // This should now be correct
+      const fetchedTasks = await getTasks();
+      setTasks(fetchedTasks);
     };
 
     fetchTasks();
@@ -24,20 +26,19 @@ const TaskList = () => {
       id: Date.now().toString(),
       title: newTaskTitle,
       completed: false,
-      dueDate: new Date().toISOString(), // Add a due date here (you can adjust the date format)
     };
 
-    await addTask(newTask);
+    await addTask(newTask, taskProof); // Pass the proof file to addTask
     setNewTaskTitle("");
+    setTaskProof(null); // Clear the proof after adding
 
-    const updatedTasks: Task[] = await getTasks(); // Explicitly typed
+    const updatedTasks = await getTasks();
     setTasks(updatedTasks);
   };
 
   const handleDeleteTask = async (taskId: string) => {
     await deleteTask(taskId);
-
-    const updatedTasks: Task[] = await getTasks(); // Explicitly typed
+    const updatedTasks = await getTasks();
     setTasks(updatedTasks);
   };
 
@@ -52,6 +53,16 @@ const TaskList = () => {
           onChange={(e) => setNewTaskTitle(e.target.value)}
           placeholder="New Task Title"
           className="border rounded-l-md p-2 flex-grow focus:outline-none focus:ring-2 focus:ring-blue-600"
+        />
+        <input
+          type="file"
+          accept="image/*" // Limit to images (modify as needed)
+          onChange={(e) => {
+            if (e.target.files) {
+              setTaskProof(e.target.files[0]); // Set the proof file
+            }
+          }}
+          className="border p-2 ml-2"
         />
         <button
           onClick={handleAddTask}
@@ -68,6 +79,10 @@ const TaskList = () => {
             className="flex justify-between items-center border-b pb-2"
           >
             <span>{task.title}</span>
+            {task.proofUrl && (
+              <img src={task.proofUrl} alt="Proof" className="h-10 w-10" />
+            )}{" "}
+            {/* Display proof */}
             <button
               onClick={() => handleDeleteTask(task.id)}
               className="text-red-600 hover:text-red-800 transition"

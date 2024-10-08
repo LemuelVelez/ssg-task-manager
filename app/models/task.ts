@@ -1,8 +1,10 @@
+// app/models/task.ts
 export interface Task {
   id: string;
   title: string;
-  dueDate: string;
   completed: boolean;
+  dueDate?: string; // Optional, if you have a due date
+  proofUrl?: string; // New field for proof submission
 }
 
 // Example tasks for demonstration
