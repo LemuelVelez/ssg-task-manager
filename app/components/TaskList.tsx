@@ -1,4 +1,3 @@
-// app/components/TaskList.tsx
 "use client"; // Marking the component as a Client Component
 
 import { useEffect, useState } from "react";
@@ -8,7 +7,7 @@ import { Task } from "../models/task";
 const TaskList = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
-  const [taskProof, setTaskProof] = useState<File | null>(null); // State for the uploaded proof file
+  const [taskProof, setTaskProof] = useState<File | undefined>(undefined); // Change to File | undefined
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -30,7 +29,7 @@ const TaskList = () => {
 
     await addTask(newTask, taskProof); // Pass the proof file to addTask
     setNewTaskTitle("");
-    setTaskProof(null); // Clear the proof after adding
+    setTaskProof(undefined); // Clear the proof after adding
 
     const updatedTasks = await getTasks();
     setTasks(updatedTasks);
@@ -60,6 +59,8 @@ const TaskList = () => {
           onChange={(e) => {
             if (e.target.files) {
               setTaskProof(e.target.files[0]); // Set the proof file
+            } else {
+              setTaskProof(undefined); // Handle case where no file is selected
             }
           }}
           className="border p-2 ml-2"
