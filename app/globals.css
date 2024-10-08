@@ -2,26 +2,197 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ========================================== TAILWIND STYLES */
+@layer base {
+  /* Remove scrollbar for cleaner UI */
+  .remove-scrollbar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .remove-scrollbar {
+    scrollbar-width: none;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  /* Custom Scrollbars for a more aesthetic touch */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    @apply remove-scrollbar w-full max-w-72 flex-col overflow-auto bg-gradient-to-b from-gray-800 to-black px-7 py-10 shadow-lg rounded-lg;
+  }
+
+  .left-sidebar {
+    @apply hidden lg:flex;
+  }
+
+  .right-sidebar {
+    @apply hidden xl:flex;
+  }
+
+  /* Text clipping for fancy titles */
+  .clip-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-blue-500 to-purple-500;
+  }
+
+  /* Background image */
+  .bg-image {
+    @apply bg-gray-900 bg-opacity-75 bg-light-rays bg-cover bg-center;
+  }
+
+  /* Typography */
+  .text-36-bold {
+    @apply text-[36px] font-bold text-white;
+  }
+
+  .text-32-bold {
+    @apply text-[32px] font-bold text-white;
+  }
+
+  .text-24-bold {
+    @apply text-[24px] font-bold text-gray-100;
+  }
+
+  .text-18-bold {
+    @apply text-[18px] font-bold text-gray-300;
+  }
+
+  .text-16-semibold {
+    @apply text-[16px] font-semibold text-gray-400;
+  }
+
+  .text-14-regular {
+    @apply text-[14px] text-gray-500;
+  }
+
+  .text-12-regular {
+    @apply text-[12px] text-gray-400;
+  }
+
+  /* Header and sub-header styles with gradient text */
+  .header {
+    @apply text-32-bold tracking-wide leading-tight;
+  }
+
+  .sub-header {
+    @apply text-18-bold tracking-wide leading-snug;
+  }
+
+  /* Container */
+  .container {
+    @apply relative flex-1 overflow-y-auto px-8 py-6 bg-gray-800 rounded-lg shadow-inner custom-scrollbar;
+  }
+
+  .sub-container {
+    @apply mx-auto flex size-full flex-col py-10 space-y-6;
+  }
+
+  /* Side image styling */
+  .side-img {
+    @apply hidden h-full object-cover md:block rounded-lg shadow-lg;
+  }
+
+  /* Copyright */
+  .copyright {
+    @apply text-14-regular text-gray-400 justify-items-end text-center xl:text-left;
+  }
+
+  /* Task success image container */
+  .success-img {
+    @apply m-auto flex flex-1 flex-col items-center justify-center gap-8 py-10 text-center;
+  }
+
+  .request-details {
+    @apply flex w-full flex-col items-center gap-8 border-y-2 border-gray-500 py-8 md:w-fit md:flex-row;
+  }
+
+  /* Admin Header */
+  .admin-header {
+    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-gray-700 px-[5%] py-5 shadow-lg;
+  }
+
+  /* Admin main content area */
+  .admin-main {
+    @apply flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12;
+  }
+
+  .admin-stat {
+    @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
+  }
+
+  /* Forms */
+  .radio-group {
+    @apply flex h-full flex-1 items-center gap-2 rounded-md border border-dashed border-gray-500 bg-gray-700 p-3;
+  }
+
+  .checkbox-label {
+    @apply cursor-pointer text-sm font-medium text-gray-300;
+  }
+
+  /* File Upload */
+  .file-upload {
+    @apply flex cursor-pointer flex-col items-center justify-center gap-4 rounded-md border border-dashed border-gray-500 bg-gray-700 p-6 transition-transform hover:scale-105 hover:shadow-xl;
+  }
+
+  .file-upload_label {
+    @apply text-center text-gray-400;
+  }
+
+  /* Stat Card */
+  .stat-card {
+    @apply flex flex-1 flex-col gap-6 rounded-lg bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 p-6 shadow-xl hover:shadow-2xl;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    @apply flex w-fit items-center gap-2 rounded-full px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white;
+  }
+
+  /* Data Table */
+  .data-table {
+    @apply z-10 w-full overflow-hidden rounded-lg border border-gray-500 shadow-lg;
+  }
+
+  .table-actions {
+    @apply flex w-full items-center justify-between space-x-2 p-4;
+  }
+
+  /* Button Styles */
+  .shad-primary-btn {
+    @apply bg-green-500 text-white rounded-lg shadow-md hover:bg-green-400 transition-colors duration-200;
+  }
+
+  .shad-danger-btn {
+    @apply bg-red-600 text-white rounded-lg shadow-md hover:bg-red-500 transition-colors duration-200;
+  }
+
+  .shad-gray-btn {
+    @apply bg-gray-500 text-white border border-gray-400 rounded-lg shadow-md hover:bg-gray-400 transition-colors duration-200;
+  }
+
+  /* Input Fields */
+  .shad-input {
+    @apply bg-gray-700 placeholder-gray-400 text-white border-gray-600 focus-visible:ring-0 rounded-md shadow-sm;
+  }
+
+  .shad-textArea {
+    @apply bg-gray-700 placeholder-gray-400 text-white border-gray-600 focus-visible:ring-0 rounded-md shadow-sm;
+  }
+
+  .shad-error {
+    @apply text-red-400 font-semibold;
   }
 }

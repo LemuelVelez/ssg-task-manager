@@ -1,47 +1,43 @@
-// app/components/TaskList.tsx
-"use client"; // Marking the component as a Client Component
+"use client";
 
 import { useEffect, useState } from "react";
-import { getTasks, addTask, deleteTask } from "./services/taskService"; // Corrected path
-import { Task } from "./models/task"; // Corrected path
+import { getTasks, addTask, deleteTask } from "../services/taskService"; // Corrected path
+import { Task } from "../models/task"; // Corrected path
 
 const TaskList = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState<string>("");
 
   useEffect(() => {
-    // Fetch tasks when the component mounts
     const fetchTasks = async () => {
-      const fetchedTasks = await getTasks();
-      setTasks(fetchedTasks);
+      const fetchedTasks: Task[] = await getTasks(); // Explicitly typed
+      setTasks(fetchedTasks); // This should now be correct
     };
 
     fetchTasks();
   }, []);
 
   const handleAddTask = async () => {
-    if (newTaskTitle.trim() === "") return; // Prevent adding empty tasks
+    if (newTaskTitle.trim() === "") return;
 
     const newTask: Task = {
       id: Date.now().toString(),
       title: newTaskTitle,
       completed: false,
-      dueDate: new Date().toISOString(), // Add a due date here
+      dueDate: new Date().toISOString(), // Add a due date here (you can adjust the date format)
     };
 
     await addTask(newTask);
-    setNewTaskTitle(""); // Clear input after adding the task
+    setNewTaskTitle("");
 
-    // Fetch updated tasks
-    const updatedTasks = await getTasks();
+    const updatedTasks: Task[] = await getTasks(); // Explicitly typed
     setTasks(updatedTasks);
   };
 
   const handleDeleteTask = async (taskId: string) => {
     await deleteTask(taskId);
 
-    // Fetch updated tasks
-    const updatedTasks = await getTasks();
+    const updatedTasks: Task[] = await getTasks(); // Explicitly typed
     setTasks(updatedTasks);
   };
 
@@ -49,7 +45,6 @@ const TaskList = () => {
     <div className="bg-white shadow-md rounded-lg p-6 mt-4">
       <h3 className="text-xl font-bold mb-4">Task List</h3>
 
-      {/* Task Input */}
       <div className="flex mb-4">
         <input
           type="text"
@@ -66,7 +61,6 @@ const TaskList = () => {
         </button>
       </div>
 
-      {/* Task List */}
       <ul className="space-y-2">
         {tasks.map((task) => (
           <li
