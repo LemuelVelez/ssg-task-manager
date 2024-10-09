@@ -1,12 +1,9 @@
 // app/lib/appwrite.ts
-import { Client, Databases } from "appwrite";
+import { Client, Databases, Storage } from "appwrite";
 
 const client = new Client();
-const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
-const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
-
-console.log("Appwrite Endpoint:", endpoint); // Log to check the endpoint
-console.log("Appwrite Project ID:", projectId); // Log to check the project ID
+const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT; // Update this line
+const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID; // Update this line
 
 if (!endpoint || !projectId) {
   throw new Error(
@@ -17,5 +14,6 @@ if (!endpoint || !projectId) {
 client.setEndpoint(endpoint).setProject(projectId);
 
 const databases = new Databases(client);
+const storage = new Storage(client);
 
-export { client, databases };
+export { client, databases, storage };

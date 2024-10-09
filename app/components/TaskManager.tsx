@@ -1,89 +1,70 @@
-"use client";
+// app/components/TaskManager.tsx
+"use client"; // Add this line at the top
 
 import React, { useState, useEffect } from "react";
+import { Account } from "appwrite";
 import { createTask, fetchTasks, deleteTask } from "../lib/taskService";
-import { Models } from "appwrite";
+import SignIn from "./SignIn"; // Import the SignIn component
+import SignUp from "./SignUp"; // Import the SignUp component
+import { client } from "../lib/appwrite"; // Ensure this imports your Appwrite client
+import { Task } from "../lib/types"; // Import the Task type
 
-// Define the Task type (based on Appwrite's Document type)
-type Task = Models.Document & {
-  title: string;
-  description: string;
-  deadline: string;
-  assigned_to: string;
-  status: string;
-};
+const account = new Account(client);
 
 const TaskManager = () => {
-  // Initialize tasks with an empty array to avoid undefined
-  const [tasks, setTasks] = useState<Task[] | undefined>(undefined);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSigningUp, setIsSigningUp] = useState(false); // Track if the user wants to sign up
 
-  const loadTasks = async () => {
+  const checkSession = async () => {
     try {
-      const fetchedTasks = await fetchTasks();
-      setTasks(fetchedTasks as Task[]); // Ensure fetchedTasks is of Task[] type
+      await account.getSession("current");
+      setIsSignedIn(true);
+      loadTasks(); // Load tasks if the user is signed in
     } catch (error) {
-      console.error("Error loading tasks:", error);
-      setTasks([]); // Fallback to empty array in case of error
+      setIsSignedIn(false);
     }
   };
 
   useEffect(() => {
-    loadTasks();
+    checkSession();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newTask: Omit<Task, "$id" | "$createdAt" | "$updatedAt"> = {
-      title,
-      description,
-      assigned_to: "member_id", // Replace with actual member ID
-      status: "pending",
-      deadline,
-    };
-    await createTask(newTask);
-    setTitle("");
-    setDescription("");
-    setDeadline("");
-    loadTasks();
+  const handleSignOut = async () => {
+    try {
+      await account.deleteSession("current"); // Deletes the current session
+      setIsSignedIn(false); // Update state
+      alert("Successfully signed out!");
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
   };
 
-  const handleDelete = async (taskId: string) => {
-    await deleteTask(taskId);
-    loadTasks();
+  // Load tasks function
+  const loadTasks = async () => {
+    const fetchedDocuments = await fetchTasks();
+    setTasks(fetchedDocuments || []); // Handle the fetched tasks
   };
+
+  if (!isSignedIn) {
+    return (
+      <div>
+        {isSigningUp ? <SignUp /> : <SignIn />}
+        <button onClick={() => setIsSigningUp(!isSigningUp)}>
+          {isSigningUp
+            ? "Already have an account? Sign In"
+            : "Don't have an account? Sign Up"}
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="task-manager">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Task Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Task Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          type="date"
-          value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
-          required
-        />
-        <button type="submit">Create Task</button>
-      </form>
-
-      <h2>Tasks:</h2>
+    <div>
+      <h1>Task Manager</h1>
+      <button onClick={handleSignOut}>Sign Out</button>
       <ul>
-        {tasks === undefined ? ( // If tasks is still undefined, show loading state
-          <li>Loading tasks...</li>
-        ) : tasks.length === 0 ? ( // Safely check if tasks array is empty
+        {tasks.length === 0 ? (
           <li>No tasks available.</li>
         ) : (
           tasks.map((task) => (
@@ -91,7 +72,7 @@ const TaskManager = () => {
               <h3>{task.title}</h3>
               <p>{task.description}</p>
               <p>Deadline: {task.deadline}</p>
-              <button onClick={() => handleDelete(task.$id)}>Delete</button>
+              <button onClick={() => deleteTask(task.$id)}>Delete</button>
             </li>
           ))
         )}

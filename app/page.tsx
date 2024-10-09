@@ -1,12 +1,17 @@
-import TaskManager from "./components/TaskManager";
+"use client"; // Client component
 
-export default function Home() {
+import React from "react";
+import LandingPage from "./components/LandingPage";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+
+const Page = () => {
   return (
-    <section className="bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-xl font-bold mb-4">
-        Welcome to the SSG Task Manager!
-      </h2>
-      <TaskManager />
-    </section>
+    <div>
+      <LandingPage />
+      {/* Add conditional rendering for SignIn and SignUp based on route */}
+    </div>
   );
-}
+};
+
+export default Page;
