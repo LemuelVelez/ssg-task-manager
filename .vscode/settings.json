@@ -1,8 +1,11 @@
 {
+    "editor.guides.bracketPairs": true,
     "cSpell.words": [
-        "APPWRITE",
-        "heroicons",
-        "signin",
-        "signup"
+        "appwrite",
+        "clsx",
+        "gifs",
+        "hookform",
+        "nextjs",
+        "signin"
     ]
 }

@@ -2,56 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: white; /* Set the background color to white */
-  background-image: url("/ssg.svg"); /* Set the background image */
-  background-size: cover; /* Cover the entire viewport */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent the background image from repeating */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-body::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
 /* ========================================== TAILWIND STYLES */
 @layer base {
-  /* Remove scrollbar for cleaner UI */
+  /* Remove scrollbar */
   .remove-scrollbar::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
   }
 
-  .remove-scrollbar {
-    scrollbar-width: none;
+  .remove-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
+    /* background: #1e2238; */
+    background: transparent;
   }
 }
 
 @layer utilities {
-  /* Custom Scrollbars for a more aesthetic touch */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-  }
-
-  /* Sidebar */
+  /* ===== UTILITIES */
   .sidebar {
-    @apply remove-scrollbar w-full max-w-72 flex-col overflow-auto bg-gradient-to-b from-gray-800 to-black px-7 py-10 shadow-lg rounded-lg;
+    @apply remove-scrollbar w-full max-w-72 flex-col overflow-auto bg-black-800 px-7 py-10;
   }
 
   .left-sidebar {
@@ -62,88 +40,52 @@ body {
     @apply hidden xl:flex;
   }
 
-  /* Text clipping for fancy titles */
   .clip-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-blue-500 to-purple-500;
+    @apply bg-clip-text text-transparent;
   }
 
-  /* Background image */
   .bg-image {
-    @apply bg-gray-900 bg-opacity-75 bg-light-rays bg-cover bg-center;
+    @apply bg-black-900 bg-light-rays bg-cover bg-no-repeat;
   }
 
-  /* Typography */
-  .text-36-bold {
-    @apply text-[36px] font-bold text-white;
-  }
-
-  .text-32-bold {
-    @apply text-[32px] font-bold text-white;
-  }
-
-  .text-24-bold {
-    @apply text-[24px] font-bold text-gray-100;
-  }
-
-  .text-18-bold {
-    @apply text-[18px] font-bold text-gray-300;
-  }
-
-  .text-16-semibold {
-    @apply text-[16px] font-semibold text-gray-400;
-  }
-
-  .text-14-regular {
-    @apply text-[14px] text-gray-500;
-  }
-
-  .text-12-regular {
-    @apply text-[12px] text-gray-400;
-  }
-
-  /* Header and sub-header styles with gradient text */
   .header {
-    @apply text-32-bold tracking-wide leading-tight;
+    @apply text-32-bold md:text-36-bold;
   }
 
   .sub-header {
-    @apply text-18-bold tracking-wide leading-snug;
+    @apply text-18-bold md:text-24-bold;
   }
 
-  /* Container */
   .container {
-    @apply relative flex-1 overflow-y-auto px-8 py-6 bg-gray-800 rounded-lg shadow-inner custom-scrollbar;
+    @apply relative flex-1 overflow-y-auto px-[5%];
   }
 
   .sub-container {
-    @apply mx-auto flex size-full flex-col py-10 space-y-6;
+    @apply mx-auto flex size-full flex-col py-10;
   }
 
-  /* Side image styling */
   .side-img {
-    @apply hidden h-full object-cover md:block rounded-lg shadow-lg;
+    @apply hidden h-full object-cover md:block;
   }
 
-  /* Copyright */
   .copyright {
-    @apply text-14-regular text-gray-400 justify-items-end text-center xl:text-left;
+    @apply text-14-regular justify-items-end text-center text-dark-600 xl:text-left;
   }
 
-  /* Task success image container */
+  /* ==== SUCCESS */
   .success-img {
-    @apply m-auto flex flex-1 flex-col items-center justify-center gap-8 py-10 text-center;
+    @apply m-auto flex flex-1 flex-col items-center justify-between gap-10 py-10;
   }
 
   .request-details {
-    @apply flex w-full flex-col items-center gap-8 border-y-2 border-gray-500 py-8 md:w-fit md:flex-row;
+    @apply flex w-full flex-col items-center gap-8 border-y-2 border-dark-400 py-8 md:w-fit md:flex-row;
   }
 
-  /* Admin Header */
+  /* ===== ADMIN */
   .admin-header {
-    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-gray-700 px-[5%] py-5 shadow-lg;
+    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl bg-dark-200 px-[5%] py-5 shadow-lg xl:px-12;
   }
 
-  /* Admin main content area */
   .admin-main {
     @apply flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12;
   }
@@ -152,66 +94,257 @@ body {
     @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
   }
 
-  /* Forms */
+  /* ==== FORM */
   .radio-group {
-    @apply flex h-full flex-1 items-center gap-2 rounded-md border border-dashed border-gray-500 bg-gray-700 p-3;
+    @apply flex h-full flex-1 items-center gap-2 rounded-md border border-dashed border-dark-500 bg-dark-400 p-3;
   }
 
   .checkbox-label {
-    @apply cursor-pointer text-sm font-medium text-gray-300;
+    @apply cursor-pointer text-sm font-medium text-dark-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:leading-none;
   }
 
-  /* File Upload */
+  /* ==== File Upload */
   .file-upload {
-    @apply flex cursor-pointer flex-col items-center justify-center gap-4 rounded-md border border-dashed border-gray-500 bg-gray-700 p-6 transition-transform hover:scale-105 hover:shadow-xl;
+    @apply text-12-regular flex cursor-pointer  flex-col items-center justify-center gap-3 rounded-md border border-dashed border-dark-500 bg-dark-400 p-5;
   }
 
   .file-upload_label {
-    @apply text-center text-gray-400;
+    @apply flex flex-col justify-center gap-2 text-center text-dark-600;
   }
 
-  /* Stat Card */
+  /* ==== Stat Card */
   .stat-card {
-    @apply flex flex-1 flex-col gap-6 rounded-lg bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 p-6 shadow-xl hover:shadow-2xl;
+    @apply flex flex-1 flex-col gap-6 rounded-2xl bg-cover p-6 shadow-lg;
   }
 
-  /* Status Badge */
+  /* ==== Status Badge */
   .status-badge {
-    @apply flex w-fit items-center gap-2 rounded-full px-4 py-2 bg-gradient-to-r from-green-400 to-blue-500 text-white;
+    @apply flex w-fit items-center gap-2 rounded-full px-4 py-2;
   }
 
   /* Data Table */
   .data-table {
-    @apply z-10 w-full overflow-hidden rounded-lg border border-gray-500 shadow-lg;
+    @apply z-10 w-full overflow-hidden rounded-lg border border-dark-400 shadow-lg;
   }
 
   .table-actions {
     @apply flex w-full items-center justify-between space-x-2 p-4;
   }
 
-  /* Button Styles */
+  /* ===== ALIGNMENTS */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  /* ===== TYPOGRAPHY */
+  .text-36-bold {
+    @apply text-[36px] leading-[40px] font-bold;
+  }
+
+  .text-24-bold {
+    @apply text-[24px] leading-[28px] font-bold;
+  }
+
+  .text-32-bold {
+    @apply text-[32px] leading-[36px] font-bold;
+  }
+
+  .text-18-bold {
+    @apply text-[18px] leading-[24px] font-bold;
+  }
+
+  .text-16-semibold {
+    @apply text-[16px] leading-[20px] font-semibold;
+  }
+
+  .text-16-regular {
+    @apply text-[16px] leading-[20px] font-normal;
+  }
+
+  .text-14-medium {
+    @apply text-[14px] leading-[18px] font-medium;
+  }
+
+  .text-14-regular {
+    @apply text-[14px] leading-[18px] font-normal;
+  }
+
+  .text-12-regular {
+    @apply text-[12px] leading-[16px] font-normal;
+  }
+
+  .text-12-semibold {
+    @apply text-[12px] leading-[16px] font-semibold;
+  }
+
+  /* =====  SHADCN OVERRIDES */
   .shad-primary-btn {
-    @apply bg-green-500 text-white rounded-lg shadow-md hover:bg-green-400 transition-colors duration-200;
+    @apply bg-green-500 text-white !important;
   }
 
   .shad-danger-btn {
-    @apply bg-red-600 text-white rounded-lg shadow-md hover:bg-red-500 transition-colors duration-200;
+    @apply bg-red-700 text-white !important;
   }
 
   .shad-gray-btn {
-    @apply bg-gray-500 text-white border border-gray-400 rounded-lg shadow-md hover:bg-gray-400 transition-colors duration-200;
+    @apply border border-dark-500 cursor-pointer bg-dark-400 text-white !important;
   }
 
-  /* Input Fields */
+  .shad-input-label {
+    @apply text-14-medium text-dark-700 !important;
+  }
+
   .shad-input {
-    @apply bg-gray-700 placeholder-gray-400 text-white border-gray-600 focus-visible:ring-0 rounded-md shadow-sm;
+    @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+  }
+
+  .shad-input-icon {
+    @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 h-11 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
   }
 
   .shad-textArea {
-    @apply bg-gray-700 placeholder-gray-400 text-white border-gray-600 focus-visible:ring-0 rounded-md shadow-sm;
+    @apply bg-dark-400 placeholder:text-dark-600 border-dark-500 focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+  }
+
+  .shad-combobox-item {
+    @apply data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 !important;
+  }
+
+  .shad-combobox-trigger {
+    @apply h-11 !important;
+  }
+
+  .shad-select-trigger {
+    @apply bg-dark-400  placeholder:text-dark-600 border-dark-500 h-11 focus:ring-0 focus:ring-offset-0 !important;
+  }
+
+  .shad-select-content {
+    @apply bg-dark-400 border-dark-500 !important;
+  }
+
+  .shad-dialog {
+    @apply bg-dark-400 border-dark-500 !important;
+  }
+
+  .shad-dialog button {
+    @apply focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
 
   .shad-error {
-    @apply text-red-400 font-semibold;
+    @apply text-red-400 !important;
   }
+
+  .shad-table {
+    @apply rounded-lg overflow-hidden !important;
+  }
+
+  .shad-table-row-header {
+    @apply border-b border-dark-400 text-light-200 hover:bg-transparent !important;
+  }
+
+  .shad-table-row {
+    @apply border-b border-dark-400 text-light-200 !important;
+  }
+
+  .shad-otp {
+    @apply w-full flex justify-between !important;
+  }
+
+  .shad-otp-slot {
+    @apply text-36-bold justify-center flex border border-dark-500 rounded-lg size-16 gap-4 !important;
+  }
+
+  .shad-alert-dialog {
+    @apply space-y-5 bg-dark-400 border-dark-500 outline-none !important;
+  }
+
+  .shad-sheet-content button {
+    @apply top-2 focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  /* =====  REACT PHONE NUMBER INPUT OVERRIDES */
+  .input-phone {
+    @apply mt-2 h-11 rounded-md px-3 text-sm border bg-dark-400 placeholder:text-dark-600 border-dark-500 !important;
+  }
+
+  /* =====  REACT DATE PICKER OVERRIDES */
+  .date-picker {
+    @apply overflow-hidden border-transparent w-full placeholder:text-dark-600  h-11 text-14-medium rounded-md px-3 outline-none !important;
+  }
+}
+
+/* =====  REACT-DATEPICKER OVERRIDES */
+.react-datepicker-wrapper.date-picker {
+  display: flex;
+  align-items: center;
+}
+
+.react-datepicker,
+.react-datepicker__time,
+.react-datepicker__header,
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker-time__header {
+  background-color: #1a1d21 !important;
+  border-color: #363a3d !important;
+  color: #abb8c4 !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker-time__header {
+  color: #ffffff !important;
+}
+
+.react-datepicker__triangle {
+  fill: #1a1d21 !important;
+  color: #1a1d21 !important;
+  stroke: #1a1d21 !important;
+}
+
+.react-datepicker__time-list-item:hover {
+  background-color: #363a3d !important;
+}
+
+.react-datepicker__input-container input {
+  background-color: #1a1d21 !important;
+  width: 100%;
+  outline: none;
+}
+
+.react-datepicker__day--selected {
+  background-color: #24ae7c !important;
+  color: #ffffff !important;
+  border-radius: 4px;
+}
+
+.react-datepicker__time-list-item--selected {
+  background-color: #24ae7c !important;
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid #363a3d !important;
+}
+
+.react-datepicker__time-list-item {
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* =====  REACT PHONE NUMBER INPUT OVERRIDES */
+.PhoneInputInput {
+  outline: none;
+  margin-left: 4px;
+  background: #1a1d21;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.PhoneInputInput::placeholder {
+  color: #1a1d21;
 }

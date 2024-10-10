@@ -1,15 +1,33 @@
-import React from "react";
-import Footer from "./components/Footer";
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import "./globals.css";
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+import { cn } from "@/lib/utils"; // Add this utility function if not already present
+import { ThemeProvider } from "@/components/theme-provider";
+
+const fontSans = Plus_Jakarta_Sans({ 
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
+});
+
+export const metadata: Metadata = {
+  title: "SSG Task Management",
+  description: "Task management system for the Supreme Student Government",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col">
-        <main className="flex-grow">{children}</main>
-        <Footer />
+      <body className={cn('min-h-screen bg-dark-300 font-sans antialiased', fontSans.variable, 'dark:bg-dark')}>
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
-};
-
-export default Layout;
+}

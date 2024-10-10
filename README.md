@@ -1,88 +1,44 @@
-## SSG Task Management System
+# Next.js Project
 
-This is a full-stack web application designed for the Supreme Student Government (SSG) to assign, monitor, and track tasks for members. It includes features like task assignment, monitoring progress, uploading proof of presence (selfies), task approval, offline functionality, and mobile optimization.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-### Tech Stack
+## Getting Started
 
-- **Frontend**: Next.js, Shadcn UI, Tailwind CSS, Framer Motion, TypeScript
-- **Backend**: Appwrite, Node.js
-- **Deployment**: Vercel (Free hosting)
-- **Version Control**: GitHub
+### Development Server
 
----
-
-### Features
-
-- Task Assignment and Monitoring
-- Upload Proof of Duty (Selfies)
-- Task Completion and Approval System
-- Overdue Task Notifications
-- Offline Functionality for Task Management
-- Mobile-friendly Design
-
----
-
-### Getting Started
-
-Follow the steps below to set up the project locally:
-
-#### 1. Prerequisites
-
-Make sure you have the following installed on your local machine:
-
-- **Node.js** (>= 14.x) – [Download Node.js](https://nodejs.org/en/)
-- **Git** – [Download Git](https://git-scm.com/)
-- **Visual Studio Code** – [Download VS Code](https://code.visualstudio.com/)
-
-#### 2. Clone the Repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/ssg-task-management.git
-cd ssg-task-management
-```
-
-#### 3. Install Dependencies
-
-Once inside the project folder, install the required dependencies:
-
-```bash
-npm install
-```
-
-#### 4. Run the Development Server
-
-To start the development server:
+To start the development server, run one of the following commands:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+Then, open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
 
-#### 5. Building the Project
+### Editing the Project
 
-To build the project for production, use:
+You can start editing the page by modifying the `app/page.tsx` file. The page will automatically update as you make changes.
 
-```bash
-npm run build
-```
+### Font Optimization
 
-#### 6. Deployment
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-This project is configured to deploy on **Vercel**. To deploy, follow these steps:
+## Learn More
 
-1. Go to [Vercel](https://vercel.com/).
-2. Link your GitHub repository.
-3. Deploy your application with one click.
+To learn more about Next.js, take a look at the following resources:
 
----
+- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - An interactive Next.js tutorial.
 
-### Contributing
+You can also check out the [Next.js GitHub repository](https://github.com/vercel/next.js/) - Your feedback and contributions are welcome!
 
-Feel free to contribute to the project by opening issues or submitting pull requests. Please follow best practices for committing and pull requests.
+## Deployment
 
----
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) by the creators of Next.js.
 
-### License
-
-This project is licensed under the MIT License.
+For more details, refer to the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
