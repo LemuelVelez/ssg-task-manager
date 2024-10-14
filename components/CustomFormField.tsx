@@ -2,7 +2,6 @@
 
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -10,17 +9,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
-import { FormFieldType } from "./forms/RegisterForm";
+import { FormFieldType } from "./forms/AdminSignInForm";
 import Image from "next/image";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
-import { E164Number } from "libphonenumber-js/core";
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
-import { Textarea } from "./ui/textarea";
-import { Checkbox } from "./ui/checkbox";
 
 interface CustomProps {
   control: Control<any>;
@@ -30,11 +20,6 @@ interface CustomProps {
   placeholder?: string;
   iconSrc?: string;
   iconAlt?: string;
-  disabled?: boolean;
-  dateFormat?: string;
-  showTimeSelect?: boolean;
-  children?: React.ReactNode;
-  renderSkeleton?: (field: any) => React.ReactNode;
   type?: string; // Add type prop for input fields
 }
 
@@ -60,19 +45,8 @@ const InputField = ({ field, placeholder, iconSrc, iconAlt, type }: any) => (
   </div>
 );
 
-// ... (other field components remain unchanged)
-
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const {
-    fieldType,
-    iconSrc,
-    iconAlt,
-    placeholder,
-    showTimeSelect,
-    dateFormat,
-    renderSkeleton,
-    type, // Destructure type prop here
-  } = props;
+  const { fieldType, iconSrc, iconAlt, placeholder, type } = props;
 
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -85,7 +59,6 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
           type={type} // Pass type prop to InputField
         />
       );
-    // ... (other cases remain unchanged)
     default:
       return null;
   }

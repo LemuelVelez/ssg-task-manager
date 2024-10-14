@@ -1,97 +1,126 @@
-# Member Task Management Application: Full Stack Solution for SSG Task Monitoring
+# Member Task Management System for SSG
 
-### Overview
-This web application is designed for the **Supreme Student Government (SSG)** to manage and monitor tasks efficiently. It allows the SSG President to assign tasks, track member progress, receive proof of duty via image uploads, and approve task completion. The app is mobile-friendly, works offline, and ensures SSG operations continue smoothly even without an internet connection.
+## Overview
 
-### Features
+This web application is designed to assist the Supreme Student Government (SSG) in managing tasks, tracking attendance, and monitoring member participation. It allows for seamless task assignment, proof of duty (via selfies), and task submission tracking, all within an intuitive and mobile-friendly interface. The system also includes offline functionality to ensure accessibility and continuity even without internet access.
 
-- **Task Assignment**: Assign tasks to SSG members with descriptions and deadlines.
-- **Task Monitoring**: Track task progress and completion in real time.
-- **Proof of Duty Submission**: Members can upload selfies as proof of their presence in the SSG office.
-- **Approval System**: The SSG President can approve/reject proofs and mark tasks as completed.
-- **Overdue Notifications**: Notifications are sent for tasks that are overdue.
-- **Mobile-Friendly and Offline Functionality**: The app works offline and is optimized for mobile devices.
+The app empowers the SSG President to assign and monitor tasks, approve member submissions, and ensure that members remain actively engaged in their responsibilities.
 
-### Tech Stack
+## Features
 
-- **Frontend**:
-  - Next.js (React framework)
-  - Shadcn UI (UI components)
-  - Tailwind CSS (Styling)
-  - Framer Motion (Animations)
-  - TypeScript (Type safety)
-  
-- **Backend**:
-  - Appwrite (Database, authentication, file storage, notifications)
-  - Node.js (Server-side logic)
-  
-- **Version Control & Collaboration**:
-  - GitHub (Repository)
-  - Git (Version control)
-  
-- **Deployment**:
-  - Vercel (Hosting and deployment)
+### 1. Task Management
+- **Task Assignment:** The SSG President can assign tasks to members, setting deadlines and providing task details.
+- **Task Progress Tracking:** Real-time tracking of task progress, allowing members to update task statuses.
+- **Proof of Task Submission:** Members can upload documents as proof of task completion.
 
-### Features in Detail
+### 2. Proof of Duty (Attendance)
+- **Selfie Upload:** Members upload selfies as proof of attendance at SSG events or in the SSG office.
+- **Approval System:** The SSG President can approve or reject submitted proofs of duty and task submissions.
 
-#### 1. Task Management
-- **Create Task**: Admins can assign tasks to members, including a description and deadline.
-- **Update Task**: Tasks can be updated to reflect progress or mark as completed.
-- **Delete Task**: Admins can delete tasks when necessary.
-- **Fetch Tasks**: View tasks assigned to individual members or all members.
+### 3. Notification System
+- **Overdue Task Alerts:** Notifications are sent to members when their tasks are overdue.
+- **Task Deadline Reminders:** Members receive reminders of upcoming task deadlines.
 
-#### 2. File Upload
-- **Selfie Upload**: Members can upload selfies as proof of presence in the SSG office.
-- **Approval System**: The SSG President can approve or reject proofs.
+### 4. Offline Functionality
+- The system supports offline access, allowing members to view tasks and upload proofs even without an internet connection. Data syncs when online access is restored.
 
-#### 3. Notifications
-- **Overdue Task Alerts**: Members receive notifications when tasks are overdue.
-- **Deadline Reminders**: Notifications for upcoming task deadlines.
+### 5. Mobile-Friendly Design
+- The application is responsive, ensuring a smooth experience on both desktop and mobile devices for members and administrators.
 
-### Offline Functionality
-The app can work offline using **service workers** and **PWA** features in Next.js. This ensures that tasks can still be viewed, and proof of duty can be uploaded even when the internet connection is unavailable. Data will sync once a connection is restored.
+## Tech Stack
 
-### Security
-- Appwrite Authentication ensures secure login for the SSG President and members.
-- File uploads are validated for format and size to prevent malicious content.
+### Frontend
+- **Next.js:** For server-side rendering and building the React-based frontend.
+- **Shadcn UI:** Provides UI components.
+- **Tailwind CSS:** Handles styling.
+- **Framer Motion:** Adds animations and smooth transitions.
+- **TypeScript:** Ensures type safety and a better development experience.
 
-### Installation
+### Backend
+- **Appwrite:** Manages the database, authentication, file storage, and notifications.
+- **Node.js:** Powers server-side logic for task management, file uploads, and notifications.
 
-To set up the project locally, follow these steps:
+## Installation and Setup
 
-1. **Clone the Repository**:
+### Prerequisites
+- Node.js (v14 or later)
+- NPM or Yarn
+- Appwrite (cloud or self-hosted)
+
+### Steps to Install and Run the Project:
+
+1. Clone the repository:
+
    ```bash
-   git clone https://github.com/your-username/ssg-task-manager.git
+   git clone https://github.com/your-username/task-management-ssg.git
    ```
-2. **Navigate to the Project Directory**:
+
+2. Navigate to the project folder:
+
    ```bash
-   cd ssg-task-manager-app
+   cd task-management-ssg
    ```
-3. **Install Dependencies**:
+
+3. Install dependencies:
+
    ```bash
    npm install
    ```
-4. **Set Up Environment Variables**:
-   Create a `.env.local` file and add the following environment variables:
+
+4. Set up Appwrite:
+   - Create a project in Appwrite.
+   - Set up your database to handle task assignments, file storage, and user authentication.
+
+5. Create a `.env.local` file and add the following environment variables:
+
    ```bash
-   NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
-   NEXT_PUBLIC_APPWRITE_PROJECT_ID=your-project-id
-   NEXT_PUBLIC_APPWRITE_DATABASE_ID=your-database-id
-   NEXT_PUBLIC_APPWRITE_BUCKET_ID=your-bucket-id
-   NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
-   NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=your-google-client-secret
+   NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
+   NEXT_PUBLIC_APPWRITE_ENDPOINT=your_appwrite_endpoint
+   NEXT_PUBLIC_APPWRITE_API_KEY=your_appwrite_api_key
    ```
-5. **Run the Application**:
+
+6. Run the application:
+
    ```bash
    npm run dev
    ```
-   Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-### Contribution Guidelines
-- Fork the repository.
-- Create a feature branch.
-- Commit your changes.
-- Open a pull request for review.
+   The app should now be running on `http://localhost:3000`.
 
-### License
+### Deploy to Vercel
+
+1. Push your code to GitHub:
+
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push origin main
+   ```
+
+2. Connect your GitHub repository to [Vercel](https://vercel.com/).
+
+3. Add the necessary environment variables to your Vercel project settings.
+
+4. Deploy the application from the Vercel dashboard.
+
+## How to Use the Application
+
+### Admin (SSG President)
+1. **Log in** using the admin credentials.
+2. **Assign Tasks**: Create and assign tasks to members with deadlines.
+3. **Approve Submissions**: Review and approve member submissions for both task completion and proof of duty.
+4. **Monitor Attendance**: Track attendance through selfies and view task progress in real-time.
+5. **Send Notifications**: Notify members of overdue tasks or upcoming deadlines.
+
+### Members
+1. **View Assigned Tasks**: Members can view all tasks assigned to them, including deadlines and progress tracking.
+2. **Submit Proofs**: Upload selfies as proof of attendance and submit documents to show task completion.
+3. **Work Offline**: View tasks and submit proofs while offline, with data syncing once back online.
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests to help improve the system.
+
+## License
+
 This project is licensed under the MIT License.

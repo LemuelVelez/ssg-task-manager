@@ -1,11 +1,7 @@
 {
-    "editor.guides.bracketPairs": true,
     "cSpell.words": [
-        "appwrite",
-        "clsx",
-        "gifs",
+        "checkin",
         "hookform",
-        "nextjs",
         "signin"
     ]
 }
