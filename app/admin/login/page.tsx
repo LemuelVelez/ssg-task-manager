@@ -12,15 +12,21 @@ import {
 } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import Button from "@/components/ui/button";
-import { signIn } from "next-auth/react";
 import { Client, Account } from "appwrite";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 // Initialize Appwrite Client
+const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
+const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
+
+if (!endpoint || !projectId) {
+  throw new Error("Appwrite endpoint or project ID is not defined.");
+}
+
 const client = new Client();
-client
-  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT)
-  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
+client.setEndpoint(endpoint).setProject(projectId);
 
 const account = new Account(client);
 
@@ -29,13 +35,35 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
+  const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+    setError(""); // Clear previous errors
+
     try {
       await account.createSession(email, password);
-    } catch (err) {
-      setError("Login failed. Please check your credentials and try again.");
+      router.push("/admin/dashboard"); // Redirect on successful login
+    } catch (err: any) {
+      // Detailed logging for debugging
+      console.error("Error Object:", err);
+      console.log("Error Code:", err?.code);
+      console.log("Error Message:", err?.message);
+
+      // Provide specific error messages based on Appwrite error codes
+      if (err.code === 401) {
+        setError("Invalid credentials. Please check your email and password.");
+      } else if (err.code === 429) {
+        setError("Too many login attempts. Please try again later.");
+      } else if (err.code === 500) {
+        setError("Server error. Please try again later.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -139,9 +167,15 @@ export default function Login() {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button type="submit" className="w-full">
-                <HiOutlineLogin className="mr-2" size={24} />
-                Login
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? (
+                  "Logging in..."
+                ) : (
+                  <>
+                    <HiOutlineLogin className="mr-2" size={24} />
+                    Login
+                  </>
+                )}
               </Button>
             </div>
           </form>
