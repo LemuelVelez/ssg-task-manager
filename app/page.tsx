@@ -11,114 +11,130 @@ import {
 import { FaUserCheck } from "react-icons/fa";
 import { MdOfflineBolt, MdCheckCircle } from "react-icons/md";
 import Button from "@/components/ui/button";
-import Card from "@/components/ui/card";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-gray-800 text-gray-200 overflow-hidden">
-      {/* Main Content Section */}
-      <section className="flex flex-1 items-center justify-center">
-        <Card className="max-w-xl p-6 space-y-6 bg-gray-900 rounded-lg shadow-lg w-full mx-4 sm:mx-6 md:mx-8 lg:mx-10">
-          {/* Centered Logo Section */}
-          <div className="flex justify-center mb-4">
-            <div className="relative w-24 h-24 overflow-hidden rounded-full">
-              <Image
-                src="/icons/logo.svg"
-                height={300}
-                width={300}
-                alt="SSG Task Management Logo"
-                className="object-cover"
-              />
-            </div>
+    <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 overflow-hidden">
+      {/* Masthead Section */}
+      <section className="flex flex-1 items-center justify-center text-center py-16 px-4">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="relative w-32 h-32 mx-auto">
+            <Image
+              src="/icons/logo.svg"
+              height={300}
+              width={300}
+              alt="SSG Task Management Logo"
+              className="object-cover rounded-full"
+            />
           </div>
-
-          <h1 className="text-3xl font-bold text-center sm:text-4xl md:text-5xl">
+          <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
             Welcome to the SSG Task Management System
           </h1>
-          <p className="text-center text-base sm:text-lg md:text-xl">
+          <p className="text-lg sm:text-xl">
             Effortlessly manage tasks, track attendance, and ensure active
             participation of members in the SSG office.
           </p>
+          <Button className="mx-auto">
+            <Link
+              href="/submit-proof"
+              className="flex items-center justify-center"
+            >
+              <HiOutlineUpload className="mr-2" size={24} />
+              Submit Proof of Duty
+            </Link>
+          </Button>
+        </div>
+      </section>
 
-          {/* Features Section */}
-          <div className="grid grid-cols-1 gap-6 mt-6">
-            {[
-              {
-                icon: (
-                  <HiOutlineClipboardList
-                    className="text-blue-400 mr-3"
-                    size={24}
-                  />
-                ),
-                text: "Assign and track tasks in real-time.",
-              },
-              {
-                icon: (
-                  <HiOutlineUpload className="text-blue-400 mr-3" size={24} />
-                ),
-                text: "Upload proof of duty with selfies.",
-              },
-              {
-                icon: <FaUserCheck className="text-blue-400 mr-3" size={24} />,
-                text: "Submit proof of task completion.",
-              },
-              {
-                icon: (
-                  <MdOfflineBolt className="text-blue-400 mr-3" size={24} />
-                ),
-                text: "Access offline and sync when online.",
-              },
-              {
-                icon: (
-                  <MdCheckCircle className="text-blue-400 mr-3" size={24} />
-                ),
-                text: "Admin approval system for submissions.",
-              },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                className="flex items-center p-4 border border-gray-600 rounded-lg shadow hover:shadow-lg transition-shadow duration-300"
-                whileHover={{ scale: 1.05 }}
-              >
+      {/* About Section */}
+      <section className="py-16 text-center px-4">
+        <h2 className="text-3xl font-bold mb-6">About SSG Task Management</h2>
+        <p className="max-w-3xl mx-auto text-lg">
+          The SSG Task Management System provides a streamlined platform to
+          assign, monitor, and track tasks, ensuring students' active
+          participation and duty submissions with ease.
+        </p>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-16 px-4">
+        <h2 className="text-3xl font-bold text-center mb-8">Features</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {[
+            {
+              icon: (
+                <HiOutlineClipboardList
+                  className="text-blue-400 mr-3"
+                  size={24}
+                />
+              ),
+              text: "Assign and track tasks in real-time.",
+              bgImage:
+                "url('https://www.samratict.com/wp-content/uploads/2015/03/bad_good.gif')",
+            },
+            {
+              icon: (
+                <HiOutlineUpload className="text-blue-400 mr-3" size={24} />
+              ),
+              text: "Upload proof of duty with selfies.",
+              bgImage:
+                "url('https://www.bakemyweb.com/files/public/de/69/2770cae8aabc7706c58dde69/i/af/bc/64f1b7f4c4d470001e9aafbc/original?name=24.gif-upload.gif&mimetype=image/gif&cd=inline')",
+            },
+            {
+              icon: <FaUserCheck className="text-blue-400 mr-3" size={24} />,
+              text: "Submit proof of task completion.",
+              bgImage:
+                "url('https://images.squarespace-cdn.com/content/v1/53ff9831e4b0b1b06904c5e0/1500458601856-F8KLCDANJAPXEA0FIONA/SubmitButtonAnimation.gif?format=1500w')",
+            },
+            {
+              icon: <MdOfflineBolt className="text-blue-400 mr-3" size={24} />,
+              text: "Access offline and sync when online.",
+              bgImage:
+                "url('https://www.cliksoftware.com/wp-content/uploads/2022/07/Syncing-to-Clik-Jobs.gif')",
+            },
+            {
+              icon: <MdCheckCircle className="text-blue-400 mr-3" size={24} />,
+              text: "Admin approval system for submissions.",
+              bgImage:
+                "url('https://media.licdn.com/dms/image/v2/D4E12AQHpwhoS6Z8RJw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1659450566928?e=1734566400&v=beta&t=O6uCBMxc6BDISN2PrJeEHUCmgAQMiIrGaJ44GM56zcE')",
+            },
+          ].map((feature, index) => (
+            <motion.div
+              key={index}
+              className="flex items-center p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 relative"
+              style={{
+                backgroundImage: feature.bgImage,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                height: "200px",
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <div className="bg-gray-700 bg-opacity-60 p-4 rounded-lg flex items-center w-full">
                 {feature.icon}
                 <span className="text-sm sm:text-base">{feature.text}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Proof Submission Button */}
-          <div className="flex justify-center mt-6">
-            <Button>
-              <Link
-                href="/submit-proof"
-                className="flex items-center w-full justify-center"
-              >
-                <HiOutlineUpload className="text-blue-400 mr-2" size={24} />
-                Submit Proof of Duty
-              </Link>
-            </Button>
-          </div>
-
-          {/* Admin Sign In Link */}
-          <div className="flex justify-center mt-4">
-            <Link
-              href="/admin/login"
-              className="flex items-center text-white underline"
-            >
-              <HiLockClosed className="text-blue-400 mr-2" size={24} />
-              Admin Login
-            </Link>
-          </div>
-
-          {/* Footer Section */}
-          <div className="text-center mt-6">
-            <p className="text-sm sm:text-base">
-              © 2024 SSG Task Management System
-            </p>
-            <p className="text-sm sm:text-base">JESUS BE THE GLORY!</p>
-          </div>
-        </Card>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </section>
+
+      {/* Copyright Section */}
+      <div className="text-center py-6 px-4">
+        <p className="text-sm sm:text-base">
+          © 2024 SSG Task Management System
+        </p>
+        <p className="text-sm sm:text-base">JESUS BE THE GLORY!</p>
+        <div className="mt-4">
+          <Link
+            href="/admin/login"
+            className="flex items-center justify-center text-white underline"
+          >
+            <HiLockClosed className="text-blue-400 mr-2" size={24} />
+            Admin Login
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
