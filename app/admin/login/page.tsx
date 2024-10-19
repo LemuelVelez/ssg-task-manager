@@ -1,8 +1,10 @@
 "use client";
 
-import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
 import {
   HiOutlineMail,
   HiLockClosed,
@@ -10,65 +12,64 @@ import {
   HiEyeOff,
   HiOutlineLogin,
 } from "react-icons/hi";
-import { FcGoogle } from "react-icons/fc";
 import Button from "@/components/ui/button";
-import { Client, Account } from "appwrite";
-import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import {
+  loginWithEmailAndPassword,
+  getLoggedInUser,
+} from "@/lib/utils/appwrite";
 
-// Initialize Appwrite Client
-const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
-const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
-
-if (!endpoint || !projectId) {
-  throw new Error("Appwrite endpoint or project ID is not defined.");
-}
-
-const client = new Client();
-client.setEndpoint(endpoint).setProject(projectId);
-
-const account = new Account(client);
-
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state
+const Login = () => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const loginForm = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true); // Start loading
-    setError(""); // Clear previous errors
-
-    try {
-      await account.createSession(email, password);
-      router.push("/admin/dashboard"); // Redirect on successful login
-    } catch (err: any) {
-      // Detailed logging for debugging
-      console.error("Error Object:", err);
-      console.log("Error Code:", err?.code);
-      console.log("Error Message:", err?.message);
-
-      // Provide specific error messages based on Appwrite error codes
-      if (err.code === 401) {
-        setError("Invalid credentials. Please check your email and password.");
-      } else if (err.code === 429) {
-        setError("Too many login attempts. Please try again later.");
-      } else if (err.code === 500) {
-        setError("Server error. Please try again later.");
-      } else {
-        setError("Login failed. Please try again.");
+  // Check if user is already logged in and redirect to dashboard
+  useEffect(() => {
+    const checkUserLoggedIn = async () => {
+      try {
+        const user = await getLoggedInUser();
+        if (user) {
+          console.info("User is already logged in, redirecting to dashboard.");
+          // Use router.replace instead of router.push
+          router.replace("/admin/dashboard");
+        }
+      } catch (error) {
+        console.log("User not logged in.");
       }
-    } finally {
-      setLoading(false); // Stop loading
-    }
-  };
+    };
 
+    checkUserLoggedIn();
+  }, [router]);
+
+  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  // Handle login form submission
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      // Use the Appwrite login function from lib/utils/appwrite.ts
+      const session = await loginWithEmailAndPassword(email, password);
+
+      if (session.userId) {
+        console.info("Login successful, redirecting to admin dashboard.");
+        // Use router.replace instead of router.push
+        router.replace("/admin/dashboard");
+      }
+    } catch (err) {
+      setError((err as any)?.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -118,7 +119,7 @@ export default function Login() {
       >
         <div className="bg-gray-800 bg-opacity-80 p-6 sm:p-8 rounded-lg shadow-md max-w-sm w-full">
           {error && <p className="text-red-500 mb-4">{error}</p>}
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} ref={loginForm}>
             <div className="mb-4">
               <label
                 className="block text-sm font-semibold mb-2"
@@ -172,8 +173,7 @@ export default function Login() {
                   "Logging in..."
                 ) : (
                   <>
-                    <HiOutlineLogin className="mr-2" size={24} />
-                    Login
+                    <HiOutlineLogin className="mr-2" size={24} /> Login
                   </>
                 )}
               </Button>
@@ -183,15 +183,6 @@ export default function Login() {
             <hr className="flex-grow border-gray-600" />
             <span className="text-gray-400 mx-2">or</span>
             <hr className="flex-grow border-gray-600" />
-          </div>
-          <div className="flex justify-center mt-4">
-            <Button
-              onClick={() => signIn("google")}
-              className="flex items-center justify-center w-full"
-            >
-              <FcGoogle className="mr-2" size={24} />
-              Sign in with Google
-            </Button>
           </div>
           <div className="text-center mt-4">
             <Link href="/" className="text-blue-400 underline">
@@ -215,4 +206,6 @@ export default function Login() {
       </motion.div>
     </motion.div>
   );
-}
+};
+
+export default Login;
