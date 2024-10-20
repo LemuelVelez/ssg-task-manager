@@ -1,32 +1,25 @@
-import React from "react";
-import { cn } from "@/lib/utils"; // Assuming you have a classNames utility
+// components/ui/button.tsx
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "default" | "success" | "destructive";
-};
+import React, { ButtonHTMLAttributes, ForwardedRef, ReactNode } from "react";
 
-const Button: React.FC<ButtonProps> = ({
-  variant = "default",
-  className,
-  children,
-  ...props
-}) => {
-  const baseStyles = "px-4 py-2 font-semibold rounded-md focus:outline-none";
+// Extend the props to include the standard button attributes and any custom props
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode; // Specify that children is required
+}
 
-  const variantStyles = {
-    default: "bg-gray-200 hover:bg-gray-300 text-black",
-    success: "bg-green-500 hover:bg-green-600 text-white",
-    destructive: "bg-red-500 hover:bg-red-600 text-white",
-  };
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, className, ...props }, ref: ForwardedRef<HTMLButtonElement>) => {
+    return (
+      <button
+        ref={ref}
+        {...props} // Spread props to ensure all are passed down
+        className={`px-4 py-2 text-white bg-gradient-to-r from-blue-600 via-purple-600 to-gray-600 rounded-lg hover:from-blue-500 hover:via-purple-500 hover:to-gray-500 transition flex items-center justify-center gap-2 ${className}`}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
-  return (
-    <button
-      className={cn(baseStyles, variantStyles[variant], className)}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-};
-
+Button.displayName = "Button"; // Setting display name for debugging
 export default Button;
