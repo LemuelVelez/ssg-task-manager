@@ -12,7 +12,7 @@ const Sidebar = () => {
           <li className="py-2 px-4 hover:bg-gray-700">
             <a href="#">Task Overview</a>
           </li>
-          <li className="py-2 px-4 hover:bg-gray-700">
+          {/* <li className="py-2 px-4 hover:bg-gray-700">
             <a href="#">Pending Duty Proofs</a>
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
@@ -20,7 +20,7 @@ const Sidebar = () => {
           </li>
           <li className="py-2 px-4 hover:bg-gray-700">
             <a href="#">Overdue Notifications</a>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </div>

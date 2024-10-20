@@ -10,7 +10,7 @@ import {
 } from "react-icons/hi";
 import { FaUserCheck } from "react-icons/fa";
 import { MdOfflineBolt, MdCheckCircle } from "react-icons/md";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 
 export default function Home() {
   return (

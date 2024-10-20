@@ -25,10 +25,13 @@ const TaskOverview = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {tasks.map((task) => (
-        <div key={task.id} className="bg-white shadow-md p-4 rounded-lg">
+        <div
+          key={task.id}
+          className="bg-gradient-to-r from-purple-400 to-blue-500 text-white shadow-lg p-4 rounded-lg"
+        >
           <h3 className="font-semibold text-lg">{task.title}</h3>
-          <p>Status: {task.status}</p>
-          <p>Deadline: {task.deadline}</p>
+          <p className="text-gray-300">Status: {task.status}</p>
+          <p className="text-gray-400">Deadline: {task.deadline}</p>
         </div>
       ))}
     </div>

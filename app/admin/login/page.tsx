@@ -12,7 +12,7 @@ import {
   HiEyeOff,
   HiOutlineLogin,
 } from "react-icons/hi";
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/Button";
 import {
   loginWithEmailAndPassword,
   getLoggedInUser,
