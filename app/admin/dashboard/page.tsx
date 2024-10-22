@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "../../../components/Navbar";
 import Sidebar from "../../../components/Sidebar";
+import withAuth from "@/hoc/withAuth";
 
 const Dashboard = () => {
   // State to control sidebar visibility
@@ -47,4 +48,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);

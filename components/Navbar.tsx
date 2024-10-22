@@ -1,8 +1,8 @@
 import { FaBell, FaBars, FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
-import Link from "next/link";
 import Button from "./ui/button";
+import { logout } from "@/lib/utils/appwrite"; // Adjust the import path as necessary
 
 interface NavbarProps {
   toggleSidebar: () => void; // Function type that returns void
@@ -34,6 +34,17 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
     setUserMenuOpen(!userMenuOpen); // Toggle user menu
     setNotificationsOpen(false); // Ensure notifications are closed
     setHighlightNotification(false); // Reset highlight when user menu is opened
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout(); // Call the logout function
+      // Optionally redirect to the login page or refresh the page
+      window.location.href = "/"; // Redirect to home after logout (adjust as necessary)
+    } catch (error) {
+      console.error("Error during logout:", error);
+      // Optionally show a notification or alert to the user
+    }
   };
 
   return (
@@ -85,11 +96,11 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
 
         {userMenuOpen && (
           <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md">
-            <Button className="mx-auto">
-              <Link href="/" className="flex items-center justify-center">
+            <Button className="mx-auto" onClick={handleLogout}>
+              <div className="flex items-center justify-center">
                 <HiOutlineLogout className="mr-2" size={24} />
                 Logout
-              </Link>
+              </div>
             </Button>
           </div>
         )}

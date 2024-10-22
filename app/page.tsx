@@ -53,7 +53,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-6">About SSG Task Management</h2>
         <p className="max-w-3xl mx-auto text-lg">
           The SSG Task Management System provides a streamlined platform to
-          assign, monitor, and track tasks, ensuring students' active
+          assign, monitor, and track tasks, ensuring officers' active
           participation and duty submissions with ease.
         </p>
       </section>

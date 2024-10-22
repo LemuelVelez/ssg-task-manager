@@ -43,4 +43,19 @@ export const getLoggedInUser = async () => {
   }
 };
 
+// Function to log out the current user
+export const logout = async () => {
+  try {
+    await account.deleteSession("current"); // Deletes the current session
+    console.log("Logout successful");
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Logout failed:", error.message);
+    } else {
+      console.error("Logout failed:", error);
+    }
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
 export { client, account };

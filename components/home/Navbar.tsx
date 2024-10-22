@@ -19,7 +19,8 @@ const Navbar = () => {
             }`}
           >
             <FaHome /> {/* Home icon */}
-            <span>Home</span>
+            <span className="hidden md:inline">Home</span>{" "}
+            {/* Hide text on small screens */}
           </li>
         </Link>
         <Link href="/proof-of-duty">
@@ -29,7 +30,8 @@ const Navbar = () => {
             }`}
           >
             <FaClipboardCheck /> {/* Proof of Duty Submission icon */}
-            <span>Proof of Duty</span>
+            <span className="hidden md:inline">Proof of Duty</span>{" "}
+            {/* Hide text on small screens */}
           </li>
         </Link>
         <Link href="/task-submission">
@@ -39,7 +41,8 @@ const Navbar = () => {
             }`}
           >
             <FaTasks /> {/* Task Submission Proof icon */}
-            <span>Task Submission</span>
+            <span className="hidden md:inline">Task Submission</span>{" "}
+            {/* Hide text on small screens */}
           </li>
         </Link>
       </div>
