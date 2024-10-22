@@ -11,10 +11,13 @@ import {
 import { FaUserCheck } from "react-icons/fa";
 import { MdOfflineBolt, MdCheckCircle } from "react-icons/md";
 import Button from "@/components/ui/button";
+import Navbar from "@/components/home/Navbar"; // Import the Navbar component
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 overflow-hidden">
+      {/* Navbar */}
+      <Navbar /> {/* Include the Navbar here */}
       {/* Masthead Section */}
       <section className="flex flex-1 items-center justify-center text-center py-16 px-4">
         <div className="max-w-4xl mx-auto space-y-6">
@@ -36,7 +39,7 @@ export default function Home() {
           </p>
           <Button className="mx-auto">
             <Link
-              href="/submit-proof"
+              href="/proof-of-duty"
               className="flex items-center justify-center"
             >
               <HiOutlineUpload className="mr-2" size={24} />
@@ -45,7 +48,6 @@ export default function Home() {
           </Button>
         </div>
       </section>
-
       {/* About Section */}
       <section className="py-16 text-center px-4">
         <h2 className="text-3xl font-bold mb-6">About SSG Task Management</h2>
@@ -55,7 +57,6 @@ export default function Home() {
           participation and duty submissions with ease.
         </p>
       </section>
-
       {/* Features Section */}
       <section className="py-16 px-4">
         <h2 className="text-3xl font-bold text-center mb-8">Features</h2>
@@ -118,7 +119,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
       {/* Copyright Section */}
       <div className="text-center py-6 px-4">
         <p className="text-sm sm:text-base">
