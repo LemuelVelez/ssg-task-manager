@@ -1,29 +1,29 @@
-import React from "react";
+import { FaHome, FaListAlt, FaClipboardCheck } from "react-icons/fa";
 
 const Sidebar = () => {
   return (
-    <div className="bg-gray-800 text-white w-64 space-y-6 py-7 px-2">
-      {/* Sidebar Header */}
-      <h2 className="text-2xl font-bold text-center">Admin Menu</h2>
-
-      {/* Sidebar Links */}
-      <nav>
-        <ul>
-          <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="#">Task Overview</a>
+    <aside className="w-64 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 h-full flex flex-col text-gray-200">
+      <div className="p-4 font-bold text-xl">Admin Dashboard</div>
+      <nav className="flex-grow">
+        <ul className="space-y-4 p-4">
+          <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer">
+            <FaHome className="text-blue-400" />
+            <span>Dashboard</span>
           </li>
-          {/* <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="#">Pending Duty Proofs</a>
+          <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer">
+            <FaListAlt className="text-blue-400" />
+            <span>Task Management</span>
           </li>
-          <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="#">Pending Task Submissions</a>
+          <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer">
+            <FaClipboardCheck className="text-blue-400" />
+            <span>Approval</span>
           </li>
-          <li className="py-2 px-4 hover:bg-gray-700">
-            <a href="#">Overdue Notifications</a>
-          </li> */}
         </ul>
       </nav>
-    </div>
+      <footer className="p-4 text-center text-sm">
+        © 2024 SSG Task Management JESUS BE THE GLORY!
+      </footer>
+    </aside>
   );
 };
 

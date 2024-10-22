@@ -1,58 +1,50 @@
 "use client";
+
 import { useState } from "react";
-import { FaBars } from "react-icons/fa"; // Import burger icon from React Icons
-import { Badge, IconButton } from "@mui/material"; // MUI components for notifications
-import { Notifications as NotificationsIcon } from "@mui/icons-material"; // Notification icon from MUI
-import withAuth from "@/hoc/withAuth"; // Higher-order component for authentication
-import DashboardContent from "@/components/dashboard/DashboardContent"; // Dashboard content component
-import Sidebar from "@/components/dashboard/Sidebar"; // Sidebar component
-import { motion } from "framer-motion"; // Framer Motion for animations
+import Navbar from "../../../components/Navbar";
+import Sidebar from "../../../components/Sidebar";
 
-const AdminDashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true); // State for toggling the sidebar
+const Dashboard = () => {
+  // State to control sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  // Toggle the sidebar and navbar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  // Function to toggle the sidebar
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Sidebar */}
-      <motion.div
-        initial={{ width: sidebarOpen ? 250 : 0 }}
-        animate={{ width: sidebarOpen ? 250 : 0 }}
-        className={`bg-gray-800 text-white transition-all duration-300 ${
-          sidebarOpen ? "block" : "hidden"
-        }`}
-      >
-        <Sidebar />
-      </motion.div>
+    <div className="flex h-screen overflow-hidden">
+      {/* Render Sidebar conditionally based on state */}
+      {isSidebarOpen && <Sidebar />}
 
-      {/* Main content area */}
-      <div className="flex-1">
-        {/* Navbar */}
-        <div className="bg-gray-900 text-white flex items-center justify-between p-4 sticky top-0 z-10">
-          {/* Burger icon to toggle the sidebar */}
-          <IconButton onClick={toggleSidebar} className="text-white">
-            <FaBars />
-          </IconButton>
+      <div className={`flex-1 ${isSidebarOpen ? "ml-0" : ""} overflow-auto`}>
+        {/* Pass toggleSidebar to Navbar */}
+        <Navbar toggleSidebar={toggleSidebar} />
 
-          {/* Notification icon */}
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="error">
-              {" "}
-              {/* Example notification count */}
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </div>
-
-        {/* Dashboard content */}
-        <div className="p-4">
-          <DashboardContent />
+        <div className="p-6">
+          <h1 className="text-3xl font-bold text-gray-200 mb-4">
+            Task Overview
+          </h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Task Cards Placeholder */}
+            <div className="bg-gray-700 bg-opacity-60 p-4 rounded-md">
+              <h2 className="text-xl text-gray-200">Task 1</h2>
+              <p className="text-gray-400">Pending - Deadline: Oct 30</p>
+            </div>
+            <div className="bg-gray-700 bg-opacity-60 p-4 rounded-md">
+              <h2 className="text-xl text-gray-200">Task 2</h2>
+              <p className="text-gray-400">In Progress - Deadline: Nov 15</p>
+            </div>
+            <div className="bg-gray-700 bg-opacity-60 p-4 rounded-md">
+              <h2 className="text-xl text-gray-200">Task 3</h2>
+              <p className="text-gray-400">Overdue - Deadline: Oct 10</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default withAuth(AdminDashboard); // Wrap with HOC for authentication
+export default Dashboard;
