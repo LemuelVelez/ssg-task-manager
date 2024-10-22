@@ -1,4 +1,3 @@
-// app/head.tsx
 import type { Metadata } from "next";
 
 // Metadata for the application
@@ -10,8 +9,8 @@ export const metadata: Metadata = {
 export default function Head() {
   return (
     <>
-      <title>{metadata.title}</title>
-      <meta name="description" content={metadata.description} />
+      <title>{String(metadata.title) ?? "Default Title"}</title>
+      <meta name="description" content={String(metadata.description) ?? "Default description"} />
     </>
   );
 }

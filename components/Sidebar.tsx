@@ -1,22 +1,44 @@
 import { FaHome, FaListAlt, FaClipboardCheck } from "react-icons/fa";
+import Link from "next/link"; // Import Link from Next.js
+import { usePathname } from 'next/navigation'; // Import usePathname to access the current path
 
 const Sidebar = () => {
+  const pathname = usePathname(); // Get the current pathname
+
   return (
     <aside className="w-64 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 h-full flex flex-col text-gray-200">
       <div className="p-4 font-bold text-xl">Admin Dashboard</div>
       <nav className="flex-grow">
         <ul className="space-y-4 p-4">
-          <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer">
+          <li
+            className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer ${
+              pathname === "/admin/dashboard" ? "bg-gray-700" : ""
+            }`} // Highlight if active
+          >
             <FaHome className="text-blue-400" />
-            <span>Dashboard</span>
+            <Link href="/admin/dashboard">
+              <span>Dashboard</span>
+            </Link>
           </li>
-          <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer">
+          <li
+            className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer ${
+              pathname === "/admin/task-management" ? "bg-gray-700" : ""
+            }`} // Highlight if active
+          >
             <FaListAlt className="text-blue-400" />
-            <span>Task Management</span>
+            <Link href="/admin/task-management">
+              <span>Task Management</span>
+            </Link>
           </li>
-          <li className="flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer">
+          <li
+            className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer ${
+              pathname === "/admin/approval" ? "bg-gray-700" : ""
+            }`} // Highlight if active
+          >
             <FaClipboardCheck className="text-blue-400" />
-            <span>Approval</span>
+            <Link href="/admin/approval">
+              <span>Approval</span>
+            </Link>
           </li>
         </ul>
       </nav>

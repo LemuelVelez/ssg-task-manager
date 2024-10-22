@@ -24,7 +24,7 @@ const Page = () => {
         <div className="p-4">
           {" "}
           {/* Optional padding for content area */}
-          <h1 className="text-xl font-bold">Task Management</h1>
+          <h1 className="text-xl font-bold">Approval</h1>
           {/* Add your main content here */}
           <div>page</div>
         </div>
