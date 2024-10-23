@@ -9,13 +9,26 @@ import { OrbitControls, useGLTF } from "@react-three/drei";
 import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getTasks } from "@/lib/utils/appwrite";
+import { AiFillWarning } from "react-icons/ai"; // Overdue Icon
+import {
+  BsCheckCircleFill,
+  BsFillClockFill,
+  BsFillPersonFill,
+} from "react-icons/bs"; // Complete, In Progress, Pending Icons
 
 // Mapping enum status values to display-friendly text
-const statusDisplayMap: { [key: string]: string } = {
+export const statusDisplayMap: { [key: string]: string } = {
   overdue: "Overdue",
   inProgress: "In Progress",
   complete: "Complete",
   pending: "Pending",
+};
+
+const statusIcons: { [key: string]: JSX.Element } = {
+  overdue: <AiFillWarning className="inline mr-1 text-red-5000" />, // Red icon for overdue
+  inProgress: <BsFillClockFill className="inline mr-1 text-yellow-500" />, // Yellow icon for in progress
+  complete: <BsCheckCircleFill className="inline mr-1 text-green-500" />, // Green icon for complete
+  pending: <BsFillPersonFill className="inline mr-1 text-blue-500" />, // Blue icon for pending
 };
 
 const Dashboard = () => {
@@ -75,6 +88,7 @@ const Dashboard = () => {
                           : "default"
                       }
                     >
+                      {statusIcons[task.status] || null}
                       {statusDisplayMap[task.status] || task.status}
                     </Badge>
                   </CardContent>
