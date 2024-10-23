@@ -1,3 +1,5 @@
+// app/home/page.tsx
+
 "use client";
 
 import Image from "next/image";
@@ -10,7 +12,7 @@ import {
 } from "react-icons/hi";
 import { FaUserCheck } from "react-icons/fa";
 import { MdOfflineBolt, MdCheckCircle } from "react-icons/md";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button"; // Ensure the correct import path for Button
 import Navbar from "@/components/home/Navbar"; // Import the Navbar component
 
 // Framer Motion variants
@@ -49,7 +51,7 @@ export default function Home() {
             Effortlessly manage tasks, track attendance, and ensure active
             participation of members in the SSG office.
           </p>
-          <Button className="mx-auto">
+          <Button variant="gradient" className="mx-auto">
             <Link
               href="/proof-of-duty"
               className="flex items-center justify-center"

@@ -1,7 +1,7 @@
 import { FaBell, FaBars, FaUserCircle } from "react-icons/fa";
 import { useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
-import Button from "./ui/button";
+import { Button } from "./ui/button";
 import { logout } from "@/lib/utils/appwrite"; // Adjust the import path as necessary
 
 interface NavbarProps {
@@ -127,7 +127,11 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
 
         {userMenuOpen && (
           <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md z-10">
-            <Button className="mx-auto" onClick={handleLogout}>
+            <Button
+              variant="gradient"
+              className="mx-auto"
+              onClick={handleLogout}
+            >
               <div className="flex items-center justify-center">
                 <HiOutlineLogout className="mr-2" size={24} />
                 Logout

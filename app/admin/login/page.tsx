@@ -12,7 +12,7 @@ import {
   HiEyeOff,
   HiOutlineLogin,
 } from "react-icons/hi";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   loginWithEmailAndPassword,
   getLoggedInUser,
@@ -168,7 +168,12 @@ const Login = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <Button type="submit" className="w-full" disabled={loading}>
+              <Button
+                variant="gradient"
+                type="submit"
+                className="w-full"
+                disabled={loading}
+              >
                 {loading ? (
                   "Logging in..."
                 ) : (
