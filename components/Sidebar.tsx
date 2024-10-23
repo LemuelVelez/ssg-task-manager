@@ -1,13 +1,21 @@
 import { FaHome, FaListAlt, FaClipboardCheck } from "react-icons/fa";
 import Link from "next/link"; // Import Link from Next.js
-import { usePathname } from 'next/navigation'; // Import usePathname to access the current path
+import { usePathname } from "next/navigation"; // Import usePathname to access the current path
 
 const Sidebar = () => {
   const pathname = usePathname(); // Get the current pathname
 
   return (
     <aside className="w-64 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 h-full flex flex-col text-gray-200">
-      <div className="p-4 font-bold text-xl">Admin Dashboard</div>
+      <div className="flex flex-col items-center p-4">
+        <img
+          src="/icons/logo.svg" // Path to the logo in the public folder
+          alt="Logo"
+          className="h-16 w-16 rounded-full" // Set height and width for circular shape
+        />
+        <span className="font-bold text-xl mt-2">Admin Dashboard</span>{" "}
+        {/* Margin-top for spacing */}
+      </div>
       <nav className="flex-grow">
         <ul className="space-y-4 p-4">
           <li

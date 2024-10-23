@@ -12,11 +12,13 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [highlightNotification, setHighlightNotification] = useState(false); // State for highlighting notification icon
-  const [notifications] = useState([
-    "Overdue task: Task 1",
-    "Upcoming deadline: Task 2",
-    "Pending approvals: Task 3",
-  ]); // Example notifications
+
+  // Example notifications categorized into different types
+  const [notifications] = useState({
+    overdue: ["Task 1: Submit report", "Task 4: Complete documentation"],
+    upcoming: ["Task 2: Project proposal - Due Nov 15"],
+    pending: ["Task 3: Approval needed for budget request"],
+  });
 
   const handleNotificationClick = () => {
     setNotificationsOpen(!notificationsOpen); // Toggle notifications
@@ -39,11 +41,9 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
   const handleLogout = async () => {
     try {
       await logout(); // Call the logout function
-      // Optionally redirect to the login page or refresh the page
       window.location.href = "/"; // Redirect to home after logout (adjust as necessary)
     } catch (error) {
       console.error("Error during logout:", error);
-      // Optionally show a notification or alert to the user
     }
   };
 
@@ -66,7 +66,7 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
             size={24}
             onClick={handleNotificationClick} // Handle notifications click
           />
-          {notifications.length > 0 && ( // Show a dot if there are notifications
+          {Object.values(notifications).flat().length > 0 && ( // Show a dot if there are notifications
             <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full" />
           )}
         </div>
@@ -80,22 +80,53 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
 
         {notificationsOpen && (
           <div
-            className="absolute right-16 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md"
+            className="absolute right-16 top-16 bg-gray-700 bg-opacity-80 p-4 rounded-md z-10 w-72" // Adjusted styling
             onMouseLeave={() => setHighlightNotification(false)} // Reset highlight when mouse leaves
           >
             <h3 className="text-gray-200 font-semibold mb-2">Notifications</h3>
-            <ul>
-              {notifications.map((notification, index) => (
-                <li key={index} className="text-gray-200">
-                  - {notification}
-                </li>
-              ))}
-            </ul>
+            <div className="space-y-2">
+              {notifications.overdue.length > 0 && (
+                <div className="bg-red-500 bg-opacity-20 p-2 rounded-md">
+                  <h4 className="text-red-500 font-bold">Overdue Tasks</h4>
+                  <ul className="list-disc pl-4 text-gray-200 font-semibold">
+                    {notifications.overdue.map((notification, index) => (
+                      <li key={index}>{notification}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {notifications.upcoming.length > 0 && (
+                <div className="bg-blue-500 bg-opacity-20 p-2 rounded-md">
+                  <h4 className="text-blue-500 font-bold">
+                    Upcoming Deadlines
+                  </h4>
+                  <ul className="list-disc pl-4 text-gray-200 font-semibold">
+                    {notifications.upcoming.map((notification, index) => (
+                      <li key={index}>{notification}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {notifications.pending.length > 0 && (
+                <div className="bg-yellow-500 bg-opacity-20 p-2 rounded-md">
+                  <h4 className="text-yellow-500 font-bold">
+                    Pending Approvals
+                  </h4>
+                  <ul className="list-disc pl-4 text-gray-200 font-semibold">
+                    {notifications.pending.map((notification, index) => (
+                      <li key={index}>{notification}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
         {userMenuOpen && (
-          <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md">
+          <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md z-10">
             <Button className="mx-auto" onClick={handleLogout}>
               <div className="flex items-center justify-center">
                 <HiOutlineLogout className="mr-2" size={24} />

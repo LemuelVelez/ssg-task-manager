@@ -13,13 +13,25 @@ import { MdOfflineBolt, MdCheckCircle } from "react-icons/md";
 import Button from "@/components/ui/button";
 import Navbar from "@/components/home/Navbar"; // Import the Navbar component
 
+// Framer Motion variants
+const motionVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+  hover: { scale: 1.05, transition: { duration: 0.3 } },
+};
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 overflow-hidden">
       {/* Navbar */}
       <Navbar /> {/* Include the Navbar here */}
       {/* Masthead Section */}
-      <section className="flex flex-1 items-center justify-center text-center py-16 px-4">
+      <motion.section
+        className="flex flex-1 items-center justify-center text-center py-16 px-4"
+        initial="hidden"
+        animate="visible"
+        variants={motionVariants}
+      >
         <div className="max-w-4xl mx-auto space-y-6">
           <div className="relative w-32 h-32 mx-auto">
             <Image
@@ -47,10 +59,17 @@ export default function Home() {
             </Link>
           </Button>
         </div>
-      </section>
+      </motion.section>
       {/* About Section */}
       <section className="py-16 text-center px-4">
-        <h2 className="text-3xl font-bold mb-6">About SSG Task Management</h2>
+        <motion.h2
+          className="text-3xl font-bold mb-6"
+          initial="hidden"
+          animate="visible"
+          variants={motionVariants}
+        >
+          About SSG Task Management
+        </motion.h2>
         <p className="max-w-3xl mx-auto text-lg">
           The SSG Task Management System provides a streamlined platform to
           assign, monitor, and track tasks, ensuring officers' active
@@ -109,7 +128,10 @@ export default function Home() {
                 backgroundPosition: "center",
                 height: "200px",
               }}
-              whileHover={{ scale: 1.05 }}
+              whileHover="hover"
+              variants={motionVariants}
+              initial="hidden"
+              animate="visible"
             >
               <div className="bg-gray-700 bg-opacity-60 p-4 rounded-lg flex items-center w-full">
                 {feature.icon}
