@@ -89,7 +89,7 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
               <AiOutlineStar className="absolute left-3 text-gray-400" />
               <SelectValue placeholder="Select priority" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-gradient-to-r from-gray-400 to-gray-800">
               {["Normal", "High", "Urgent"].map((priority) => (
                 <SelectItem
                   key={priority}
