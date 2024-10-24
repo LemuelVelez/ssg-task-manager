@@ -84,7 +84,7 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
             <TableHead>
               <div className="flex items-center">
                 <AiOutlineUser className="mr-2" />
-                <span>Assigned To</span>
+                <span>Assigned</span>
               </div>
             </TableHead>
             <TableHead>
@@ -159,7 +159,7 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
           <AiOutlineLeft className="mr-2" />
           Previous
         </Button>
-        <span className="text-lg font-semibold">
+        <span className="text-sm font-normal">
           Page {currentPage} of {totalPages}
         </span>
         <Button

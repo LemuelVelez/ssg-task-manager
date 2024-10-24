@@ -1,4 +1,4 @@
-import { Client, Account, Databases } from "appwrite";
+import { Client, Account, Databases, Storage } from "appwrite";
 import { Task } from "./types"; // Importing Task interface from types.ts
 
 // Initialize the Appwrite client
@@ -11,6 +11,9 @@ const account = new Account(client);
 
 // Create an instance of Databases to interact with collections
 const databases = new Databases(client);
+
+// Create an instance of Storage to handle file uploads
+const storage = new Storage(client);
 
 // Function to create a session using email and password
 export const loginWithEmailAndPassword = async (
@@ -188,4 +191,183 @@ export const updateOverdueTasks = async () => {
 // Call the function to demonstrate updating overdue tasks
 updateOverdueTasks();
 
-export { client, account, databases };
+// Function to create a new notification
+export const createNotification = async (notificationData: {
+  id: string;
+  message: string;
+  Priority: "Normal" | "High" | "Urgent"; // Use lowercase 'Priority' to match the Appwrite schema
+}) => {
+  try {
+    const response = await databases.createDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_NOTIFICATION_COLLECTION_ID as string, // Your Notification collection ID
+      "unique()", // Auto-generate a unique ID for the notification
+      {
+        id: notificationData.id, // Add the message
+        message: notificationData.message, // Add the message
+        Priority: notificationData.Priority, // Add the Priority
+      }
+    );
+
+    console.log("Notification created:", response);
+    return response; // Return the created notification document
+  } catch (error) {
+    console.error(
+      "Failed to create notification:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to get notifications from the database collection
+export const getNotifications = async () => {
+  try {
+    const response = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_NOTIFICATION_COLLECTION_ID as string // Your Notification collection ID
+    );
+
+    // Map the documents to a notification type
+    const notifications = response.documents.map((doc: any) => ({
+      id: doc.$id, // Assuming $id is the unique identifier in Appwrite
+      message: doc.message,
+      Priority: doc.Priority,
+    }));
+
+    console.log("Notifications retrieved:", notifications);
+    return notifications; // Return the list of mapped notifications
+  } catch (error) {
+    console.error(
+      "Failed to retrieve notifications:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to delete a notification
+export const deleteNotification = async (notificationId: string) => {
+  try {
+    await databases.deleteDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_NOTIFICATION_COLLECTION_ID as string, // Your Notification collection ID
+      notificationId // The ID of the notification to delete
+    );
+    console.log("Notification deleted:", notificationId);
+  } catch (error) {
+    console.error(
+      "Failed to delete notification:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to upload a file to the Proofs bucket
+export const uploadProofFile = async (file: File) => {
+  try {
+    const response = await storage.createFile(
+      process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, // Your Appwrite bucket ID
+      "unique()", // Auto-generate a unique ID for the file
+      file // The file to upload
+    );
+    console.log("File uploaded:", response);
+    return response; // Return the uploaded file document
+  } catch (error) {
+    console.error(
+      "Failed to upload file:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to delete a file from the Proofs bucket
+export const deleteProofFile = async (fileId: string) => {
+  try {
+    await storage.deleteFile(
+      process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, // Your Appwrite bucket ID
+      fileId // The ID of the file to delete
+    );
+    console.log("File deleted:", fileId);
+  } catch (error) {
+    console.error(
+      "Failed to delete file:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to create a new proof
+export const createProofs = async (proofData: {
+  type: "Duty" | "Task";
+  file: string; // URL of the uploaded file
+  description: string;
+  status: "Pending" | "Approved" | "Rejected";
+}) => {
+  try {
+    const response = await databases.createDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string, // Your Proofs collection ID
+      "unique()", // Use 'unique()' to auto-generate a unique ID for the proof
+      proofData
+    );
+    console.log("Proof created:", response);
+    return response; // Return the created proof document
+  } catch (error) {
+    console.error(
+      "Failed to create proof:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to get proofs from the database collection
+export const getProofs = async () => {
+  try {
+    const response = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string // Your Proofs collection ID
+    );
+
+    const proofs = response.documents.map((doc: any) => ({
+      id: doc.$id,
+      type: doc.type,
+      file: doc.file,
+      description: doc.description,
+      status: doc.status,
+    }));
+
+    console.log("Proofs retrieved:", proofs);
+    return proofs; // Return the list of mapped proofs
+  } catch (error) {
+    console.error(
+      "Failed to retrieve proofs:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+// Function to delete a proof
+export const deleteProofs = async (proofId: string) => {
+  try {
+    await databases.deleteDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string, // Your Proofs collection ID
+      proofId // The ID of the proof to delete
+    );
+    console.log("Proof deleted:", proofId);
+  } catch (error) {
+    console.error(
+      "Failed to delete proof:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+export { client, account, databases, storage };
