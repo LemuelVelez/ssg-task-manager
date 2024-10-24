@@ -16,13 +16,8 @@ import {
   BsFillPersonFill,
 } from "react-icons/bs"; // Complete, In Progress, Pending Icons
 
-// Mapping enum status values to display-friendly text
-export const statusDisplayMap: { [key: string]: string } = {
-  overdue: "Overdue",
-  inProgress: "In Progress",
-  complete: "Complete",
-  pending: "Pending",
-};
+// Importing the statusDisplayMap and Task interface from types.ts
+import { statusDisplayMap, Task } from "@/lib/utils/types";
 
 const statusIcons: { [key: string]: JSX.Element } = {
   overdue: <AiFillWarning className="inline mr-1 text-red-5000" />, // Red icon for overdue
@@ -33,7 +28,7 @@ const statusIcons: { [key: string]: JSX.Element } = {
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [tasks, setTasks] = useState<any[]>([]); // State to hold the fetched tasks
+  const [tasks, setTasks] = useState<Task[]>([]); // Changed 'any[]' to 'Task[]' for type safety
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

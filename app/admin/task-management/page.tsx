@@ -4,15 +4,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Navbar from "../../../components/Navbar";
 import Sidebar from "../../../components/Sidebar";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../../components/ui/table";
-import { Input } from "../../../components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormItem,
@@ -22,21 +14,17 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import {
-  AiOutlinePlus,
-  AiOutlineFieldTime,
-  AiOutlineUser,
-  AiOutlineDelete,
-  AiOutlineInfoCircle,
-  AiOutlineCheckCircle,
-  AiOutlineExclamationCircle,
-  AiOutlineClockCircle,
-  AiOutlineTool,
-} from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 import Swal from "sweetalert2";
-import { createTask, getTasks, deleteTask } from "@/lib/utils/appwrite";
-import { Badge } from "@/components/ui/badge";
+import {
+  createTask,
+  deleteTask,
+  getTasks,
+  updateOverdueTasks,
+} from "@/lib/utils/appwrite"; // Ensure you have these utility functions
+import TableContent from "../task-management/TableContent"; // Import TableContent component
 
+// Task interface remains the same
 interface Task {
   id: string;
   title: string;
@@ -50,12 +38,32 @@ const Page = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const methods = useForm<Omit<Task, "id">>();
+  const methods = useForm<Omit<Task, "id" | "status">>();
   const { handleSubmit, register, reset } = methods;
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+
+  // Fetch tasks when the component mounts
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const fetchedTasks = await getTasks();
+        setTasks(fetchedTasks as Task[]);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+      }
+    };
+
+    fetchTasks();
+    // Set interval for periodic updates
+    const intervalId = setInterval(() => {
+      updateOverdueTasks();
+    }, 3000); // Check 3 every minutes
+
+    return () => clearInterval(intervalId); // Clean up interval on unmount
+  }, []);
 
   const onSubmit: SubmitHandler<Omit<Task, "id" | "status">> = async (data) => {
     const { title, member, deadline, description } = data;
@@ -116,46 +124,6 @@ const Page = () => {
     }
   };
 
-  const updateTaskStatus = () => {
-    const now = new Date();
-
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => {
-        const taskDeadline = new Date(task.deadline);
-        if (task.status === "pending" && taskDeadline < now) {
-          Swal.fire({
-            icon: "warning",
-            title: "Task Overdue!",
-            text: `The task "${task.title}" is now overdue.`,
-            confirmButtonText: "OK",
-          });
-          return { ...task, status: "overdue" }; // Update status to overdue
-        }
-        return task; // Return unchanged task
-      })
-    );
-  };
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const fetchedTasks = await getTasks();
-        setTasks(fetchedTasks as Task[]);
-      } catch (error) {
-        console.error("Failed to fetch tasks:", error);
-      }
-    };
-
-    fetchTasks();
-
-    // Set interval for periodic updates
-    const intervalId = setInterval(() => {
-      updateTaskStatus();
-    }, 60000); // Check every minute
-
-    return () => clearInterval(intervalId); // Clean up interval on unmount
-  }, []);
-
   return (
     <div className="flex h-screen overflow-hidden bg-gray-900 text-gray-200">
       {isSidebarOpen && <Sidebar />}
@@ -196,7 +164,7 @@ const Page = () => {
                     id="member"
                     {...register("member")}
                     required
-                    placeholder="Enter member name"
+                    placeholder="Assign a member"
                   />
                 </FormControl>
                 <FormMessage />
@@ -205,101 +173,25 @@ const Page = () => {
                 <FormLabel htmlFor="deadline">Deadline</FormLabel>
                 <FormControl>
                   <Input
-                    type="date"
                     id="deadline"
+                    type="date"
                     {...register("deadline")}
                     required
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
+
               <Button
                 type="submit"
-                className="mt-4 flex items-center bg-blue-500 hover:bg-blue-600 text-white"
+                className="mt-4 bg-blue-600 hover:bg-blue-700"
               >
-                <AiOutlinePlus className="mr-2" />
-                Add Task
+                <AiOutlinePlus className="mr-2" /> Create Task
               </Button>
             </Form>
           </FormProvider>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>
-                  <div className="flex items-center">
-                    <AiOutlineInfoCircle className="mr-2" />{" "}
-                    <span className="mr-2">Title</span>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex items-center">
-                    <AiOutlineInfoCircle className="mr-2" />
-                    <span>Description</span>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex items-center">
-                    <AiOutlineUser className="mr-2" />
-                    <span>Assigned To</span>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex items-center">
-                    <AiOutlineFieldTime className="mr-2" />
-                    <span>Deadline</span>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex items-center">
-                    <AiOutlineCheckCircle className="mr-2" />
-                    <span>Status</span>
-                  </div>
-                </TableHead>
-                <TableHead>
-                  <div className="flex items-center">
-                    <AiOutlineTool className="mr-2" />
-                    <span>Actions</span>
-                  </div>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {tasks.map((task) => (
-                <TableRow key={task.id}>
-                  <TableCell>{task.title}</TableCell>
-                  <TableCell>{task.description || "N/A"}</TableCell>
-                  <TableCell>{task.member}</TableCell>
-                  <TableCell>{task.deadline}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      {task.status === "overdue" && (
-                        <AiOutlineExclamationCircle className="mr-2 text-red-500" />
-                      )}
-                      {task.status === "inProgress" && (
-                        <AiOutlineClockCircle className="mr-2 text-blue-500" />
-                      )}
-                      {task.status === "complete" && (
-                        <AiOutlineCheckCircle className="mr-2 text-green-500" />
-                      )}
-                      <Badge variant={task.status}>
-                        {task.status.charAt(0).toUpperCase() +
-                          task.status.slice(1)}
-                      </Badge>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button
-                      className="bg-red-500 hover:bg-red-600 text-white"
-                      onClick={() => handleDeleteTask(task.id)}
-                    >
-                      <AiOutlineDelete />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <TableContent tasks={tasks} onDeleteTask={handleDeleteTask} />
         </div>
       </div>
     </div>
