@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion } from "framer-motion"; // Import Framer Motion
 import {
   Table,
   TableBody,
@@ -56,6 +57,13 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
     setCurrentPage(newPage);
   };
 
+  // Define Framer Motion variants
+  const variants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.95 }, // Subtle scaling down on exit
+  };
+
   return (
     <div>
       <Table>
@@ -101,7 +109,13 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
         </TableHeader>
         <TableBody>
           {currentTasks.map((task) => (
-            <TableRow key={task.id}>
+            <motion.tr
+              key={task.id}
+              variants={variants} // Apply the variants
+              initial="hidden"
+              animate="visible"
+              exit="exit" // Animate exit
+            >
               <TableCell>{task.title}</TableCell>
               <TableCell>{task.description || "N/A"}</TableCell>
               <TableCell>{task.member}</TableCell>
@@ -130,7 +144,7 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
                   <AiOutlineDelete />
                 </Button>
               </TableCell>
-            </TableRow>
+            </motion.tr>
           ))}
         </TableBody>
       </Table>

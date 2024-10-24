@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { motion } from "framer-motion";
 import Navbar from "../../../components/Navbar";
 import Sidebar from "../../../components/Sidebar";
 import { Input } from "@/components/ui/input";
@@ -23,6 +24,7 @@ import {
   updateOverdueTasks,
 } from "@/lib/utils/appwrite"; // Ensure you have these utility functions
 import TableContent from "../task-management/TableContent"; // Import TableContent component
+import withAuth from "@/app/hoc/withAuth";
 
 // Task interface remains the same
 interface Task {
@@ -60,7 +62,7 @@ const Page = () => {
     // Set interval for periodic updates
     const intervalId = setInterval(() => {
       updateOverdueTasks();
-    }, 3000); // Check 3 every minutes
+    }, 3000); // Check every 3 minutes
 
     return () => clearInterval(intervalId); // Clean up interval on unmount
   }, []);
@@ -124,71 +126,107 @@ const Page = () => {
     }
   };
 
+  // Define motion variants
+  const sidebarVariants = {
+    open: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+    closed: { opacity: 0, x: -250, transition: { duration: 0.3 } },
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
     <div className="flex h-screen overflow-hidden bg-gray-900 text-gray-200">
-      {isSidebarOpen && <Sidebar />}
+      <motion.div
+        animate={isSidebarOpen ? "open" : "closed"}
+        variants={sidebarVariants}
+        initial="closed"
+        className="z-10"
+      >
+        {isSidebarOpen && <Sidebar />}
+      </motion.div>
       <div className={`flex-1 ${isSidebarOpen ? "ml-0" : ""} overflow-auto`}>
         <Navbar toggleSidebar={toggleSidebar} />
         <div className="p-4">
-          <h1 className="text-2xl font-bold mb-4">Task Management</h1>
+          <motion.h1
+            className="text-2xl font-bold mb-4"
+            initial="hidden"
+            animate="visible"
+            variants={titleVariants}
+          >
+            Task Management
+          </motion.h1>
 
           <FormProvider {...methods}>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <FormItem>
-                <FormLabel htmlFor="title">Task Title</FormLabel>
-                <FormControl>
-                  <Input
-                    id="title"
-                    {...register("title")}
-                    required
-                    placeholder="Enter task title"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-              <FormItem>
-                <FormLabel htmlFor="description">Description</FormLabel>
-                <FormControl>
-                  <Input
-                    id="description"
-                    {...register("description")}
-                    placeholder="Enter task description"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-              <FormItem>
-                <FormLabel htmlFor="member">Assigned Member</FormLabel>
-                <FormControl>
-                  <Input
-                    id="member"
-                    {...register("member")}
-                    required
-                    placeholder="Assign a member"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-              <FormItem>
-                <FormLabel htmlFor="deadline">Deadline</FormLabel>
-                <FormControl>
-                  <Input
-                    id="deadline"
-                    type="date"
-                    {...register("deadline")}
-                    required
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={formVariants}
+            >
+              <Form onSubmit={handleSubmit(onSubmit)}>
+                <FormItem>
+                  <FormLabel htmlFor="title">Task Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="title"
+                      {...register("title")}
+                      required
+                      placeholder="Enter task title"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+                <FormItem>
+                  <FormLabel htmlFor="description">Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="description"
+                      {...register("description")}
+                      placeholder="Enter task description"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+                <FormItem>
+                  <FormLabel htmlFor="member">Assigned Member</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="member"
+                      {...register("member")}
+                      required
+                      placeholder="Assign a member"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+                <FormItem>
+                  <FormLabel htmlFor="deadline">Deadline</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="deadline"
+                      type="date"
+                      {...register("deadline")}
+                      required
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
 
-              <Button
-                type="submit"
-                className="mt-4 bg-blue-600 hover:bg-blue-700"
-              >
-                <AiOutlinePlus className="mr-2" /> Create Task
-              </Button>
-            </Form>
+                <Button
+                  type="submit"
+                  className="mt-4 bg-blue-600 hover:bg-blue-700"
+                >
+                  <AiOutlinePlus className="mr-2" /> Create Task
+                </Button>
+              </Form>
+            </motion.div>
           </FormProvider>
 
           <TableContent tasks={tasks} onDeleteTask={handleDeleteTask} />
@@ -198,4 +236,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);
