@@ -166,19 +166,23 @@ export const updateOverdueTasks = async () => {
     // Get current date and time
     const now = new Date();
 
-    // Filter for overdue tasks
+    // Filter for overdue tasks, excluding tasks with "complete" status
     const overdueTasks = tasks.filter((task) => {
-      return new Date(task.deadline) < now && task.status !== "completed"; // Check if the task is overdue and not completed
+      return new Date(task.deadline) < now && task.status !== "complete"; // Check if the task is overdue and not complete
     });
 
-    // Update the status of all overdue tasks
+    // Update the status of all overdue tasks, except those with "complete" status
     const updatePromises = overdueTasks.map((task) => {
       const taskId = task.id; // Use the 'id' attribute for the task ID
-      const newStatus = "overdue"; // Set the status to "overdue"
-      return updateTaskStatus(taskId, newStatus); // Update each task's status
+      if (task.status !== "complete") {
+        // Ensure complete tasks are excluded
+        const newStatus = "overdue"; // Set the status to "overdue"
+        return updateTaskStatus(taskId, newStatus); // Update each task's status
+      }
     });
 
-    const updatedTasks = await Promise.all(updatePromises);
+    // Wait for all the tasks to be updated
+    const updatedTasks = await Promise.all(updatePromises.filter(Boolean)); // Filter out undefined results
     console.log("Updated overdue tasks:", updatedTasks);
   } catch (error) {
     console.error(

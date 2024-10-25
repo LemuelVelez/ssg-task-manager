@@ -24,6 +24,7 @@ import {
   AiOutlineRight,
 } from "react-icons/ai";
 import { Badge } from "@/components/ui/badge";
+import { BsFillPersonFill } from "react-icons/bs";
 
 interface Task {
   id: string;
@@ -122,6 +123,9 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
               <TableCell>{task.deadline}</TableCell>
               <TableCell>
                 <div className="flex items-center">
+                  {task.status === "pending" && (
+                    <BsFillPersonFill className="mr-1 text-yellow-500" />
+                  )}
                   {task.status === "overdue" && (
                     <AiOutlineExclamationCircle className="mr-2 text-red-500" />
                   )}

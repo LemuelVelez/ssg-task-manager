@@ -23,7 +23,7 @@ import { statusDisplayMap, Task } from "@/lib/utils/types";
 const statusIcons: { [key: string]: JSX.Element } = {
   overdue: <AiFillWarning className="inline mr-1 text-red-5000" />,
   inProgress: <BsFillClockFill className="inline mr-1 text-yellow-500" />,
-  complete: <BsCheckCircleFill className="inline mr-1 text-green-500" />,
+  complete: <BsCheckCircleFill className="inline mr-1 text-green-5000" />,
   pending: <BsFillPersonFill className="inline mr-1 text-blue-500" />,
 };
 
