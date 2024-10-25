@@ -1,5 +1,3 @@
-// components/ui/button.tsx
-
 import React, { ButtonHTMLAttributes, ForwardedRef, ReactNode } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -29,6 +27,7 @@ const buttonVariants = cva(
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
+        responsive: "h-auto px-2 sm:px-3 md:px-4 lg:px-5 py-1 sm:py-2 md:py-3 lg:py-4",
       },
     },
     defaultVariants: {
@@ -62,4 +61,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button"; // Setting display name for debugging
-export { Button, buttonVariants }; // Export both the Button and buttonVariants
+export { Button, buttonVariants };

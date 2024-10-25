@@ -66,11 +66,13 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
   };
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-lg mb-8">
-      <h2 className="text-lg font-semibold mb-4">Send Notification</h2>
+    <div className="bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-lg shadow-lg mb-8">
+      <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-4">
+        Send Notification
+      </h2>
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <AiOutlineMessage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <AiOutlineMessage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg sm:text-xl" />
           <Textarea
             className="pl-10" // Add left padding for icon
             placeholder="Notification message..."
@@ -105,7 +107,7 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
           </Select>
         </div>
         <Button
-          className="bg-blue-600 hover:bg-blue-700 p-2 rounded-md flex items-center"
+          className="bg-blue-600 hover:bg-blue-700 p-2 rounded-md flex items-center w-full sm:w-auto"
           onClick={handleSubmit}
         >
           <AiOutlineSend className="mr-1" /> {/* Add send icon */}

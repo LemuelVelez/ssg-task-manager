@@ -111,14 +111,12 @@ const NotificationList: React.FC<NotificationListProps> = ({
                       </Badge>
                     </p>
                   </div>
-                  <CardFooter>
-                    <Button
-                      className="bg-red-500 hover:bg-red-600 text-white flex items-center"
-                      onClick={() => handleDeleteNotification(notification.id)}
-                    >
-                      <AiOutlineDelete className="ml-0" />
-                    </Button>
-                  </CardFooter>
+                  <Button
+                    className="bg-red-500 hover:bg-red-600 text-white flex items-center p-2 rounded-md"
+                    onClick={() => handleDeleteNotification(notification.id)}
+                  >
+                    <AiOutlineDelete className="ml-0" />
+                  </Button>
                 </div>
               </Card>
             ))}

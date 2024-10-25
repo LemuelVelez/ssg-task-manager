@@ -12,9 +12,9 @@ const Sidebar = () => {
         <img
           src="/icons/logo.svg"
           alt="Logo"
-          className="h-10 w-10 sm:h-16 sm:w-16 rounded-full aspect-square"
+          className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-full aspect-square"
         />
-        <span className="font-bold text-xl mt-2 hidden sm:block">
+        <span className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl mt-2 hidden sm:block">
           Admin Dashboard
         </span>
       </div>
@@ -29,8 +29,10 @@ const Sidebar = () => {
                 pathname === "/admin/dashboard" ? "bg-gray-700" : ""
               }`}
             >
-              <FaHome className="text-blue-400" />
-              <span className="hidden sm:inline">Dashboard</span>
+              <FaHome className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
+              <span className="hidden sm:inline text-xs sm:text-sm md:text-base lg:text-lg">
+                Dashboard
+              </span>
             </Link>
           </li>
           <li>
@@ -40,8 +42,10 @@ const Sidebar = () => {
                 pathname === "/admin/task-management" ? "bg-gray-700" : ""
               }`}
             >
-              <FaListAlt className="text-blue-400" />
-              <span className="hidden sm:inline">Task Management</span>
+              <FaListAlt className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
+              <span className="hidden sm:inline text-xs sm:text-sm md:text-base lg:text-lg">
+                Task Management
+              </span>
             </Link>
           </li>
           <li>
@@ -51,16 +55,19 @@ const Sidebar = () => {
                 pathname === "/admin/approval" ? "bg-gray-700" : ""
               }`}
             >
-              <FaClipboardCheck className="text-blue-400" />
-              <span className="hidden sm:inline">Approval</span>
+              <FaClipboardCheck className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
+              <span className="hidden sm:inline text-xs sm:text-sm md:text-base lg:text-lg">
+                Approval
+              </span>
             </Link>
           </li>
         </ul>
       </nav>
 
       {/* Footer - hidden on small screens */}
-      <footer className="p-4 text-center text-sm hidden sm:block">
-        © 2024 SSG Task Management JESUS BE THE GLORY!
+      <footer className="p-4 text-center text-xs sm:text-sm md:text-base hidden sm:block">
+        © 2024 SSG Task Management
+        <div> JESUS BE THE GLORY!</div>
       </footer>
     </aside>
   );

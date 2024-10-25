@@ -51,19 +51,19 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
     <nav className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200">
       <div className="flex items-center">
         <FaBars
-          className="text-blue-400 cursor-pointer"
-          size={24}
+          className="text-blue-400 cursor-pointer text-lg sm:text-2xl"
           onClick={toggleSidebar} // Toggle the sidebar when clicked
         />
-        <span className="ml-4 text-xl font-bold">SSG Task Management</span>
+        <span className="ml-4 text-lg sm:text-xl font-bold">
+          SSG Task Management
+        </span>
       </div>
       <div className="flex items-center space-x-4 relative">
         <div className="relative">
           <FaBell
-            className={`text-blue-400 cursor-pointer ${
+            className={`text-blue-400 cursor-pointer text-lg sm:text-2xl ${
               highlightNotification ? "text-red-500" : ""
             }`} // Change color when highlighted
-            size={24}
             onClick={handleNotificationClick} // Handle notifications click
           />
           {Object.values(notifications).flat().length > 0 && ( // Show a dot if there are notifications
@@ -71,16 +71,15 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           )}
         </div>
         <FaUserCircle
-          className={`text-blue-400 cursor-pointer ${
+          className={`text-blue-400 cursor-pointer text-lg sm:text-2xl ${
             userMenuOpen ? "text-red-500" : ""
           }`} // Change color when user menu is open
-          size={32}
           onClick={handleUserClick} // Handle user menu click
         />
 
         {notificationsOpen && (
           <div
-            className="absolute right-16 top-16 bg-gray-700 bg-opacity-80 p-4 rounded-md z-10 w-72" // Adjusted styling
+            className="absolute right-0 top-16 bg-gray-700 bg-opacity-80 p-4 rounded-md z-10 w-64 sm:w-72"
             onMouseLeave={() => setHighlightNotification(false)} // Reset highlight when mouse leaves
           >
             <h3 className="text-gray-200 font-semibold mb-2">Notifications</h3>
@@ -126,7 +125,7 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
         )}
 
         {userMenuOpen && (
-          <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md z-10">
+          <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md z-10 w-64 sm:w-72">
             <Button
               variant="gradient"
               className="mx-auto"
