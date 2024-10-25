@@ -99,18 +99,21 @@ const NotificationList: React.FC<NotificationListProps> = ({
                 className="p-4 bg-gray-700 rounded-md"
               >
                 <div className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium text-white flex items-center">
-                      <AiOutlineBell className="mr-1" />
+                  <div className="bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg mb-4 max-w-full sm:max-w-md lg:max-w-lg">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                      <AiOutlineBell className="flex-shrink-0 text-xl sm:text-2xl text-blue-500" />
                       {/* Bell icon for notification message */}
-                      {notification.message}
-                    </p>
-                    <p className="text-sm text-gray-400 flex items-center">
+                      <p className="font-medium text-gray-300 leading-relaxed whitespace-pre-line break-words text-sm sm:text-base lg:text-lg">
+                        {notification.message}
+                      </p>
+                    </div>
+                    <div className="mt-3 sm:mt-2 text-gray-400 flex items-center text-xs sm:text-sm lg:text-base">
                       <Badge variant={notification.Priority}>
                         {statusDisplayMap[notification.Priority]}
                       </Badge>
-                    </p>
+                    </div>
                   </div>
+
                   <Button
                     className="bg-red-500 hover:bg-red-600 text-white flex items-center p-2 rounded-md"
                     onClick={() => handleDeleteNotification(notification.id)}
