@@ -83,10 +83,7 @@ const Page = () => {
           <NotificationForm onAddNotification={handleAddNotification} />
 
           {/* Notification list to display current notifications */}
-          <NotificationList
-            notifications={notifications}
-            onDeleteNotification={handleDeleteNotification}
-          />
+          <NotificationList onDeleteNotification={handleDeleteNotification} />
 
           {/* Proof form and list components */}
           <ProofForm onAddProof={addProof} />

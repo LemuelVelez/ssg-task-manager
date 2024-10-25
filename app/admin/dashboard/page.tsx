@@ -117,7 +117,7 @@ const Dashboard = () => {
                         {statusDisplayMap[task.status] || task.status}
                       </Badge>
                     </CardContent>
-                    <CardDescription>
+                    <CardDescription className="p-5 pt-0">
                       <p>Deadline: {task.deadline}</p>
                     </CardDescription>
                   </CardTitle>
