@@ -125,10 +125,10 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
         )}
 
         {userMenuOpen && (
-          <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-60 p-4 rounded-md z-10 w-64 sm:w-72">
+          <div className="absolute right-0 top-16 bg-gray-700 bg-opacity-70 p-4 rounded-md shadow-lg z-10 w-64 sm:w-72">
             <Button
               variant="gradient"
-              className="mx-auto"
+              className="w-full"
               onClick={handleLogout}
             >
               <div className="flex items-center justify-center">
