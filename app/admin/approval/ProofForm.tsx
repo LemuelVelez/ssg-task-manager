@@ -29,72 +29,53 @@ interface ProofFormProps {
 }
 
 const ProofForm: React.FC<ProofFormProps> = ({ onAddProof }) => {
-  // State variables for the proof form
   const [newProofFile, setNewProofFile] = useState<File | null>(null);
   const [newProofType, setNewProofType] = useState<"Duty" | "Task">("Duty");
   const [newProofDescription, setNewProofDescription] = useState("");
-  const fileInputRef = useRef<HTMLInputElement | null>(null); // Reference for resetting file input
+  const [loading, setLoading] = useState(false); // Loading state for submit button
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Handle file upload
   const handleProofUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       setNewProofFile(event.target.files[0]);
     }
   };
 
-  // Handle form submission
   const handleSubmit = async () => {
-    if (!newProofFile) {
+    if (!newProofFile || newProofDescription.trim() === "") {
       await Swal.fire({
         icon: "warning",
-        title: "File Required",
-        text: "Please upload a file for proof submission.",
+        title: newProofFile ? "Description Required" : "File Required",
+        text: newProofFile
+          ? "Please provide a description for the proof submission."
+          : "Please upload a file for proof submission.",
         confirmButtonText: "OK",
       });
       return;
     }
 
-    if (newProofDescription.trim() === "") {
-      await Swal.fire({
-        icon: "warning",
-        title: "Description Required",
-        text: "Please provide a description for the proof submission.",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
+    setLoading(true); // Set loading to true when submission starts
 
     try {
-      // Upload the file and get the URL
       const fileUrl = await uploadProofFile(newProofFile);
-
-      // Generate a unique ID (could be generated in the uploadProofFile function or elsewhere)
-      const proofId = `proof_${Date.now()}`; // Example: using timestamp for a unique ID
-
-      // Prepare proof data with the file URL
+      const proofId = `proof_${Date.now()}`;
       const proofData = {
-        id: proofId, // Use generated unique ID
+        id: proofId,
         type: newProofType,
         file: fileUrl,
         description: newProofDescription,
         status: "Pending" as const,
       };
 
-      // Create the proof document
       const proofResponse = await createProofs(proofData);
-      console.log("Proof created:", proofResponse);
-
-      // Notify parent component
       onAddProof(newProofFile, newProofType, newProofDescription, "Pending");
 
-      // Reset form fields
       setNewProofFile(null);
       setNewProofDescription("");
       if (fileInputRef.current) {
-        fileInputRef.current.value = ""; // Reset file input
+        fileInputRef.current.value = "";
       }
 
-      // Show success alert
       await Swal.fire({
         icon: "success",
         title: "Proof Submitted!",
@@ -103,14 +84,14 @@ const ProofForm: React.FC<ProofFormProps> = ({ onAddProof }) => {
       });
     } catch (error) {
       console.error("Failed to submit proof:", error);
-
-      // Show error alert
       await Swal.fire({
         icon: "error",
         title: "Submission Failed",
         text: "There was an error submitting your proof. Please try again.",
         confirmButtonText: "OK",
       });
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -143,16 +124,16 @@ const ProofForm: React.FC<ProofFormProps> = ({ onAddProof }) => {
         </div>
 
         <div className="relative flex-shrink">
-          <InputFile ref={fileInputRef} onChange={handleProofUpload} />{" "}
-          {/* File input */}
+          <InputFile ref={fileInputRef} onChange={handleProofUpload} />
         </div>
 
         <Button
           className="bg-blue-600 hover:bg-blue-700 p-2 rounded-md"
           onClick={handleSubmit}
+          disabled={loading} // Disable button when loading
         >
           <AiOutlineSend className="mr-1" />
-          Submit Proof
+          {loading ? "Submitting..." : "Submit Proof"} {/* Toggle text */}
         </Button>
       </div>
     </div>

@@ -26,9 +26,9 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
   const [newPriority, setNewPriority] = useState<"Normal" | "High" | "Urgent">(
     "Normal"
   );
+  const [isLoading, setIsLoading] = useState(false); // Loading state for submission
 
   const handleSubmit = async () => {
-    // Basic validation
     if (!newMessage.trim()) {
       Swal.fire({
         icon: "warning",
@@ -49,17 +49,16 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
       return;
     }
 
+    setIsLoading(true); // Start loading
+
     try {
-      // Create the notification using Appwrite
       const response = await createNotification({
         message: newMessage,
-        Priority: newPriority, // Ensure this is correct (case-sensitive)
+        Priority: newPriority,
       });
 
-      // Call the onAddNotification callback if needed
-      onAddNotification(response.message, newPriority); // Modify as necessary based on response
+      onAddNotification(response.message, newPriority); // Call callback
 
-      // Show success alert
       await Swal.fire({
         icon: "success",
         title: "Success!",
@@ -67,13 +66,11 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
         confirmButtonText: "OK",
       });
 
-      // Clear the input fields
       setNewId("");
       setNewMessage("");
       setNewPriority("Normal");
     } catch (error) {
       console.error("Failed to create notification:", error);
-      // Show error alert with specific error message if available
       const errorMessage =
         (error instanceof Error && error.message) ||
         "Failed to send notification.";
@@ -84,6 +81,8 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
         text: errorMessage,
         confirmButtonText: "OK",
       });
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
 
@@ -96,11 +95,11 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
         <div className="relative flex-1">
           <AiOutlineMessage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg sm:text-xl" />
           <Textarea
-            className="pl-10" // Add left padding for icon
+            className="pl-10"
             placeholder="Notification message..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            required // Make field required
+            required
           />
         </div>
         <div className="relative flex-1">
@@ -109,7 +108,7 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
             onValueChange={(value) =>
               setNewPriority(value as "Normal" | "High" | "Urgent")
             }
-            required // Make field required
+            required
           >
             <SelectTrigger className="bg-gray-700 rounded-md pl-10 flex items-center">
               <AiOutlineStar className="absolute left-3 text-gray-400" />
@@ -133,9 +132,10 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
         <Button
           className="bg-blue-600 hover:bg-blue-700 p-2 rounded-md flex items-center w-full sm:w-auto"
           onClick={handleSubmit}
+          disabled={isLoading} // Disable button when loading
         >
-          <AiOutlineSend className="mr-1" /> {/* Add send icon */}
-          Send Notification
+          <AiOutlineSend className="mr-1" />
+          {isLoading ? "Sending..." : "Send Notification"} {/* Dynamic text */}
         </Button>
       </div>
     </div>

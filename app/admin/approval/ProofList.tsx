@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2"; // Import SweetAlert2
 import {
   Card,
   CardHeader,
@@ -9,13 +10,19 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { getProofs, deleteProofAndFile } from "@/lib/utils/appwrite"; // Import combined function
+import { getProofs, deleteProofAndFile } from "@/lib/utils/appwrite";
+import { Button } from "@/components/ui/button";
+import {
+  AiOutlineCheck,
+  AiOutlineClose,
+  AiOutlineDelete,
+} from "react-icons/ai"; // Import icons
 
 // Define the Proof interface
 interface Proof {
   id: string;
   type: "Duty" | "Task";
-  fileUrl: string; // Ensure this property is included
+  fileUrl: string;
   description: string;
   status: "Pending" | "Approved" | "Rejected";
 }
@@ -49,22 +56,57 @@ const ProofList: React.FC<ProofListProps> = ({
     }
   };
 
-  // Function to handle proof deletion
+  // Function to handle proof deletion with confirmation
   const handleDeleteProof = async (proofId: string, fileUrl: string | null) => {
     if (!fileUrl) return;
 
-    try {
-      const fileId = fileUrl.split("/").slice(-2, -1)[0]; // Extract file ID from URL
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This will permanently delete the proof and its associated file.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const fileId = fileUrl.split("/").slice(-2, -1)[0];
+          await deleteProofAndFile(fileId as string, proofId);
+          Swal.fire("Deleted!", "The proof has been deleted.", "success");
+          fetchProofs(); // Refetch the proofs after deletion
+        } catch (error) {
+          console.error("Error deleting proof:", error);
+          Swal.fire("Error!", "An error occurred while deleting.", "error");
+        }
+      }
+    });
+  };
 
-      // Call the combined delete function for file and proof
-      await deleteProofAndFile(fileId as string, proofId);
-      console.log("Proof and file deleted successfully");
+  // Function to handle proof status updates with confirmation
+  const handleUpdateProofStatus = (
+    id: string,
+    status: "Approved" | "Rejected"
+  ) => {
+    const actionText = status === "Approved" ? "approve" : "reject";
 
-      // Refetch the proofs after deletion
-      fetchProofs();
-    } catch (error) {
-      console.error("Error deleting proof:", error);
-    }
+    Swal.fire({
+      title: `Are you sure you want to ${actionText} this proof?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: status === "Approved" ? "#28a745" : "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: `Yes, ${actionText} it!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onUpdateProofStatus(id, status);
+        Swal.fire(
+          `${status === "Approved" ? "Approved" : "Rejected"}!`,
+          `The proof has been ${actionText}ed.`,
+          "success"
+        );
+      }
+    });
   };
 
   useEffect(() => {
@@ -82,7 +124,7 @@ const ProofList: React.FC<ProofListProps> = ({
         <ul className="space-y-4">
           {proofsList.map((proof) => (
             <li key={proof.id}>
-              <Card className="bg-gradient-to-r from-white to-gray-200">
+              <Card className="bg-gradient-to-r from-white to-gray-500">
                 <CardHeader>
                   <CardTitle>{proof.description}</CardTitle>
                   <CardDescription>
@@ -104,7 +146,6 @@ const ProofList: React.FC<ProofListProps> = ({
                         alt="Proof"
                         className="w-full h-auto object-cover rounded-md"
                         onError={(e) => {
-                          // Fallback if the file is not an image
                           e.currentTarget.style.display = "none";
                           const nextSibling = e.currentTarget
                             .nextElementSibling as HTMLSpanElement;
@@ -124,28 +165,31 @@ const ProofList: React.FC<ProofListProps> = ({
 
                 <CardFooter>
                   <div className="flex gap-2">
-                    <button
-                      className="bg-green-600 hover:bg-green-700 p-2 rounded-md"
-                      onClick={() => {
-                        onUpdateProofStatus(proof.id, "Approved");
-                      }}
+                    <Button
+                      className="bg-green-600 hover:bg-green-700 p-2 rounded-md flex items-center"
+                      onClick={() =>
+                        handleUpdateProofStatus(proof.id, "Approved")
+                      }
                     >
-                      Approve
-                    </button>
-                    <button
-                      className="bg-red-600 hover:bg-red-700 p-2 rounded-md"
-                      onClick={() => {
-                        onUpdateProofStatus(proof.id, "Rejected");
-                      }}
+                      <AiOutlineCheck className="mr-1" />
+                      <span className="hidden md:inline">Approve</span>
+                    </Button>
+                    <Button
+                      className="bg-red-600 hover:bg-red-700 p-2 rounded-md flex items-center"
+                      onClick={() =>
+                        handleUpdateProofStatus(proof.id, "Rejected")
+                      }
                     >
-                      Reject
-                    </button>
-                    <button
-                      className="bg-red-600 hover:bg-red-700 p-2 rounded-md"
+                      <AiOutlineClose className="mr-1" />
+                      <span className="hidden md:inline">Reject</span>
+                    </Button>
+                    <Button
+                      className="bg-red-600 hover:bg-red-700 p-2 rounded-md flex items-center"
                       onClick={() => handleDeleteProof(proof.id, proof.fileUrl)}
                     >
-                      Delete
-                    </button>
+                      <AiOutlineDelete className="mr-1" />
+                      <span className="hidden md:inline">Delete</span>
+                    </Button>
                   </div>
                 </CardFooter>
               </Card>
