@@ -1,75 +1,70 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../../components/Navbar";
 import Sidebar from "../../../components/Sidebar";
 import NotificationForm from "./NotificationForm";
 import NotificationList from "./NotificationList";
 import ProofForm from "./ProofForm";
 import ProofList from "./ProofList";
+import withAuth from "@/app/hoc/withAuth";
+import { updateProofStatus, getProofs } from "@/lib/utils/appwrite"; // Import necessary Appwrite functions
 
 // Define the types for proofs
 interface Proof {
-  id: number;
-  type: "duty" | "task";
-  file: File;
+  id: string; // Changed to string to match Appwrite document ID type
+  type: "Duty" | "Task";
+  fileUrl: string; // Include fileUrl to match the ProofList interface
   description: string;
-  status: "pending" | "approved" | "rejected";
-}
-
-// Define the types for notifications
-interface Notification {
-  id: string; // Unique identifier for the notification
-  message: string; // The notification message
-  Priority: string; // Notification Priority
+  status: "Pending" | "Approved" | "Rejected"; // Change to uppercase
 }
 
 const Page = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [proofs, setProofs] = useState<Proof[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]); // State for notifications
+  const [proofs, setProofs] = useState<Proof[]>([]); // Initialize proofs state
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  const addProof = (file: File, type: "duty" | "task", description: string) => {
-    const newProof: Proof = {
-      id: Date.now(),
-      type,
-      file,
-      description,
-      status: "pending",
-    };
-    setProofs((prevProofs) => [...prevProofs, newProof]);
-  };
-
-  const updateProofStatus = (id: number, status: "approved" | "rejected") => {
-    setProofs((prevProofs) =>
-      prevProofs.map((proof) =>
-        proof.id === id ? { ...proof, status } : proof
-      )
-    );
+  const addProof = () => {
+    // Logic to add a proof
   };
 
   // Handle adding a new notification
-  const handleAddNotification = (message: string, Priority: string) => {
-    const newNotification: Notification = {
-      id: Date.now().toString(), // Unique ID generation, ensure it's unique across notifications
-      message,
-      Priority,
-    };
-    setNotifications((prevNotifications) => [
-      ...prevNotifications,
-      newNotification,
-    ]);
+  const handleAddNotification = () => {
+    // Logic to handle adding notifications
   };
 
   // Handle notification deletion
-  const handleDeleteNotification = (id: string) => {
-    console.log("Delete notification with id:", id);
-    setNotifications((prevNotifications) =>
-      prevNotifications.filter((notification) => notification.id !== id)
-    ); // Remove from state
+  const handleDeleteNotification = () => {
+    // Logic to handle notification deletion
   };
+
+  // Fetch proofs from Appwrite
+  const fetchProofs = async () => {
+    try {
+      const retrievedProofs: Proof[] = await getProofs(); // Fetch proofs
+      setProofs(retrievedProofs); // Set the fetched proofs
+    } catch (error) {
+      console.error("Error fetching proofs:", error);
+    }
+  };
+
+  // Handle updating proof status
+  const onUpdateProofStatus = async (
+    id: string,
+    status: "Pending" | "Approved" | "Rejected"
+  ) => {
+    try {
+      await updateProofStatus(id, status); // Update proof status in Appwrite
+      fetchProofs(); // Refetch proofs after updating
+    } catch (error) {
+      console.error("Error updating proof status:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProofs(); // Fetch proofs on component mount
+  }, []);
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-900 text-gray-200">
@@ -87,11 +82,16 @@ const Page = () => {
 
           {/* Proof form and list components */}
           <ProofForm onAddProof={addProof} />
-          <ProofList proofs={proofs} onUpdateProofStatus={updateProofStatus} />
+
+          {/* ProofList component */}
+          <ProofList
+            proofs={proofs} // Pass the correct proofs array
+            onUpdateProofStatus={onUpdateProofStatus}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default Page;
+export default withAuth(Page);

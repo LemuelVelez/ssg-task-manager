@@ -28,12 +28,30 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
   );
 
   const handleSubmit = async () => {
-    if (newMessage.trim() === "") return;
+    // Basic validation
+    if (!newMessage.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Validation Error",
+        text: "Notification message is required.",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    if (!newPriority) {
+      Swal.fire({
+        icon: "warning",
+        title: "Validation Error",
+        text: "Please select a notification priority.",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
 
     try {
       // Create the notification using Appwrite
       const response = await createNotification({
-        id: newId,
         message: newMessage,
         Priority: newPriority, // Ensure this is correct (case-sensitive)
       });
@@ -55,11 +73,15 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
       setNewPriority("Normal");
     } catch (error) {
       console.error("Failed to create notification:", error);
-      // Show error alert
+      // Show error alert with specific error message if available
+      const errorMessage =
+        (error instanceof Error && error.message) ||
+        "Failed to send notification.";
+
       Swal.fire({
         icon: "error",
         title: "Error!",
-        text: "Failed to send notification.",
+        text: errorMessage,
         confirmButtonText: "OK",
       });
     }
@@ -78,6 +100,7 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
             placeholder="Notification message..."
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
+            required // Make field required
           />
         </div>
         <div className="relative flex-1">
@@ -86,6 +109,7 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
             onValueChange={(value) =>
               setNewPriority(value as "Normal" | "High" | "Urgent")
             }
+            required // Make field required
           >
             <SelectTrigger className="bg-gray-700 rounded-md pl-10 flex items-center">
               <AiOutlineStar className="absolute left-3 text-gray-400" />

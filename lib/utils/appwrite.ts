@@ -197,7 +197,6 @@ updateOverdueTasks();
 
 // Function to create a new notification
 export const createNotification = async (notificationData: {
-  id: string;
   message: string;
   Priority: "Normal" | "High" | "Urgent"; // Use lowercase 'Priority' to match the Appwrite schema
 }) => {
@@ -207,7 +206,6 @@ export const createNotification = async (notificationData: {
       process.env.NEXT_PUBLIC_APPWRITE_NOTIFICATION_COLLECTION_ID as string, // Your Notification collection ID
       "unique()", // Auto-generate a unique ID for the notification
       {
-        id: notificationData.id, // Add the message
         message: notificationData.message, // Add the message
         Priority: notificationData.Priority, // Add the Priority
       }
@@ -271,13 +269,18 @@ export const deleteNotification = async (notificationId: string) => {
 // Function to upload a file to the Proofs bucket
 export const uploadProofFile = async (file: File) => {
   try {
+    // Upload the file to Appwrite storage
     const response = await storage.createFile(
       process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, // Your Appwrite bucket ID
       "unique()", // Auto-generate a unique ID for the file
       file // The file to upload
     );
     console.log("File uploaded:", response);
-    return response; // Return the uploaded file document
+
+    // Construct the full file URL using the response ID and Appwrite settings
+    const fileUrl = `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID}/files/${response.$id}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`;
+
+    return fileUrl; // Return the complete URL of the uploaded file
   } catch (error) {
     console.error(
       "Failed to upload file:",
@@ -287,25 +290,9 @@ export const uploadProofFile = async (file: File) => {
   }
 };
 
-// Function to delete a file from the Proofs bucket
-export const deleteProofFile = async (fileId: string) => {
-  try {
-    await storage.deleteFile(
-      process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, // Your Appwrite bucket ID
-      fileId // The ID of the file to delete
-    );
-    console.log("File deleted:", fileId);
-  } catch (error) {
-    console.error(
-      "Failed to delete file:",
-      error instanceof Error ? error.message : error
-    );
-    throw error; // Propagate the error to be handled elsewhere
-  }
-};
-
 // Function to create a new proof
 export const createProofs = async (proofData: {
+  id: string;
   type: "Duty" | "Task";
   file: string; // URL of the uploaded file
   description: string;
@@ -333,17 +320,22 @@ export const createProofs = async (proofData: {
 export const getProofs = async () => {
   try {
     const response = await databases.listDocuments(
-      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
-      process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string // Your Proofs collection ID
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string,
+      process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string
     );
 
-    const proofs = response.documents.map((doc: any) => ({
-      id: doc.$id,
-      type: doc.type,
-      file: doc.file,
-      description: doc.description,
-      status: doc.status,
-    }));
+    const proofs = response.documents.map((doc: any) => {
+      // Construct the file URL if it exists
+      const fileUrl = doc.file || null; // Assuming 'file' is a URL stored in the document
+
+      return {
+        id: doc.$id,
+        type: doc.type,
+        fileUrl: fileUrl, // Assign the file URL correctly
+        description: doc.description,
+        status: doc.status,
+      };
+    });
 
     console.log("Proofs retrieved:", proofs);
     return proofs; // Return the list of mapped proofs
@@ -356,18 +348,52 @@ export const getProofs = async () => {
   }
 };
 
-// Function to delete a proof
-export const deleteProofs = async (proofId: string) => {
+// Function to delete both the file and its corresponding proof document
+export const deleteProofAndFile = async (fileId: string, proofId: string) => {
   try {
-    await databases.deleteDocument(
+    // Delete the file from Appwrite storage
+    const fileResponse = await storage.deleteFile(
+      process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID as string, // Your Appwrite bucket ID
+      fileId // The ID of the file to delete
+    );
+    console.log("File deleted:", fileId);
+
+    // Delete the proof document from the Appwrite database
+    const proofResponse = await databases.deleteDocument(
       process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
       process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string, // Your Proofs collection ID
       proofId // The ID of the proof to delete
     );
     console.log("Proof deleted:", proofId);
+
+    // Return both responses for confirmation or further handling
+    return { fileResponse, proofResponse };
   } catch (error) {
     console.error(
-      "Failed to delete proof:",
+      "Failed to delete proof or file:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
+
+// Function to update proof status in the database collection
+export const updateProofStatus = async (
+  id: string,
+  status: "Pending" | "Approved" | "Rejected"
+) => {
+  try {
+    await databases.updateDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID as string, // Your Proofs collection ID
+      id, // The ID of the document to update
+      { status } // The updated status
+    );
+    console.log(`Proof with ID ${id} updated to status: ${status}`);
+  } catch (error) {
+    console.error(
+      "Failed to update proof status:",
       error instanceof Error ? error.message : error
     );
     throw error; // Propagate the error to be handled elsewhere

@@ -1,8 +1,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils"; // Utility for conditional classes
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type = "text", ...props }, ref) => {
@@ -26,24 +25,30 @@ Input.displayName = "Input"; // For React dev tools
 export { Input };
 
 // InputFile Component using Input
-
 import { Label } from "@/components/ui/label";
 
-interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // Add onChange prop type
+export interface InputFileProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export function InputFile({ onChange, ...props }: InputFileProps) {
-  return (
-    <div className="grid w-full max-w-sm items-center gap-1.5">
-      <Label htmlFor="file"></Label>
-      <Input
-        id="file"
-        type="file"
-        className="bg-gray-700 text-gray-200"
-        onChange={onChange} // Pass onChange here
-        {...props} // Spread the rest of the props
-      />
-    </div>
-  );
-}
+// Forward ref to InputFile component
+export const InputFile = React.forwardRef<HTMLInputElement, InputFileProps>(
+  ({ onChange, ...props }, ref) => {
+    return (
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label htmlFor="file"></Label>
+        <Input
+          id="file"
+          type="file"
+          className="bg-gray-700 text-gray-200"
+          onChange={onChange}
+          ref={ref} // Pass ref here
+          {...props}
+        />
+      </div>
+    );
+  }
+);
+
+InputFile.displayName = "InputFile"; // For React dev tools

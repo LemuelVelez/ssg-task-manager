@@ -27,14 +27,12 @@ const Login = () => {
   const loginForm = useRef<HTMLFormElement>(null);
   const router = useRouter();
 
-  // Check if user is already logged in and redirect to dashboard
   useEffect(() => {
     const checkUserLoggedIn = async () => {
       try {
         const user = await getLoggedInUser();
         if (user) {
           console.info("User is already logged in, redirecting to dashboard.");
-          // Use router.replace instead of router.push
           router.replace("/admin/dashboard");
         }
       } catch (error) {
@@ -45,24 +43,19 @@ const Login = () => {
     checkUserLoggedIn();
   }, [router]);
 
-  // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // Handle login form submission
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      // Use the Appwrite login function from lib/utils/appwrite.ts
       const session = await loginWithEmailAndPassword(email, password);
-
       if (session.userId) {
         console.info("Login successful, redirecting to admin dashboard.");
-        // Use router.replace instead of router.push
         router.replace("/admin/dashboard");
       }
     } catch (err) {
@@ -79,7 +72,6 @@ const Login = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
-      {/* Masthead Section */}
       <motion.section
         className="flex flex-1 items-center justify-center text-center py-4"
         initial={{ y: -100, opacity: 0 }}
@@ -110,7 +102,6 @@ const Login = () => {
         </div>
       </motion.section>
 
-      {/* Login Form Section */}
       <motion.section
         className="flex flex-1 items-center justify-center py-4"
         initial={{ y: 100, opacity: 0 }}
@@ -167,7 +158,7 @@ const Login = () => {
                 </button>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-4">
               <Button
                 variant="gradient"
                 type="submit"
@@ -197,9 +188,8 @@ const Login = () => {
         </div>
       </motion.section>
 
-      {/* Footer Section */}
       <motion.div
-        className="text-center py-6 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200"
+        className="text-center py-6 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 mt-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}

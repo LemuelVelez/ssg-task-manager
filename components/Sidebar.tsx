@@ -57,7 +57,7 @@ const Sidebar = () => {
             >
               <FaClipboardCheck className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
               <span className="hidden sm:inline text-xs sm:text-sm md:text-base lg:text-lg">
-                Approval
+                Approval & Notification
               </span>
             </Link>
           </li>
