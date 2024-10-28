@@ -52,10 +52,7 @@ export default function Home() {
             participation of members in the SSG office.
           </p>
           <Button variant="gradient" className="mx-auto">
-            <Link
-              href="/proof-of-duty"
-              className="flex items-center justify-center"
-            >
+            <Link href="/proof" className="flex items-center justify-center">
               <HiOutlineUpload className="mr-2" size={24} />
               Submit Proof of Duty
             </Link>
