@@ -8,9 +8,12 @@ const statusDisplayMap: { [key: string]: string } = {
   inProgress: "In Progress",
   complete: "Complete",
   pending: "Pending",
-  Normal: "Normal",         // Added mapping for low priority
-  High: "High",   // Added mapping for medium priority
-  Urgent: "Urgent",       // Added mapping for high priority
+  Normal: "Normal",  // Added mapping for low priority
+  High: "High",      // Added mapping for medium priority
+  Urgent: "Urgent",  // Added mapping for high priority
+  Approved: "Approved",  // Added mapping for Approved status
+  Rejected: "Rejected",  // Added mapping for Rejected status
+  Pending: "Pending",
 };
 
 // Define badge variants with different styles for each status and priority
@@ -38,7 +41,13 @@ const badgeVariants = cva(
         High:
           "border-transparent bg-yellow-300 text-gray-900 shadow hover:bg-yellow-400 dark:bg-yellow-800 dark:text-gray-50 dark:hover:bg-yellow-700/80", // Medium priority variant
         Urgent:
-        "border-transparent bg-red-500 text-gray-50 shadow hover:bg-red-500/80 dark:bg-red-900 dark:text-gray-50 dark:hover:bg-red-900/80",      // High priority variant
+          "border-transparent bg-red-500 text-gray-50 shadow hover:bg-red-500/80 dark:bg-red-900 dark:text-gray-50 dark:hover:bg-red-900/80", // High priority variant
+        Approved:
+          "border-transparent bg-green-500 text-gray-50 shadow hover:bg-green-500/80 dark:bg-green-900 dark:text-gray-50 dark:hover:bg-green-900/80", // Approved status variant
+        Rejected:
+          "border-transparent bg-red-600 text-gray-50 shadow hover:bg-red-600/80 dark:bg-red-700 dark:text-gray-50 dark:hover:bg-red-700/80", // Rejected status variant
+        Pending:
+          "border-transparent bg-yellow-500 text-gray-50 shadow hover:bg-yellow-500/80 dark:bg-yellow-900 dark:text-gray-50 dark:hover:bg-yellow-900/80",
       },
     },
     defaultVariants: {

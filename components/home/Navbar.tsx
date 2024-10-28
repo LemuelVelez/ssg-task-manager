@@ -23,25 +23,25 @@ const Navbar = () => {
             {/* Hide text on small screens */}
           </li>
         </Link>
-        <Link href="/proof-of-duty">
+        <Link href="/proof">
           <li
             className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer ${
-              pathname === "/proof-of-duty" ? "bg-gray-700" : ""
+              pathname === "/proof" ? "bg-gray-700" : ""
             }`}
           >
             <FaClipboardCheck /> {/* Proof of Duty Submission icon */}
-            <span className="hidden md:inline">Proof of Duty</span>{" "}
+            <span className="hidden md:inline">Proof</span>{" "}
             {/* Hide text on small screens */}
           </li>
         </Link>
-        <Link href="/task-submission">
+        <Link href="/task">
           <li
             className={`flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer ${
-              pathname === "/task-submission" ? "bg-gray-700" : ""
+              pathname === "/task" ? "bg-gray-700" : ""
             }`}
           >
             <FaTasks /> {/* Task Submission Proof icon */}
-            <span className="hidden md:inline">Task Submission</span>{" "}
+            <span className="hidden md:inline">Task</span>{" "}
             {/* Hide text on small screens */}
           </li>
         </Link>

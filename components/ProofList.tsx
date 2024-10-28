@@ -10,14 +10,10 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { getProofs, deleteProofAndFile } from "@/lib/utils/appwrite";
-import { Button } from "@/components/ui/button";
-import {
-  AiOutlineCheck,
-  AiOutlineClose,
-  AiOutlineDelete,
-} from "react-icons/ai"; // Import icons
-import { Badge, statusDisplayMap } from "@/components/ui/badge"; // Import Badge and status display mapping
+import { getProofs, deleteProofAndFile } from "@/lib/utils/appwrite"; // Import delete function
+import { AiOutlineDelete } from "react-icons/ai";
+import { Button } from "./ui/button";
+import { Badge, statusDisplayMap } from "./ui/badge"; // Import the Badge component
 
 // Define the Proof interface
 interface Proof {
@@ -25,23 +21,16 @@ interface Proof {
   type: "Duty" | "Task";
   fileUrl: string;
   description: string;
-  status: "Pending" | "Approved" | "Rejected"; // Added potential status
+  status: "Pending" | "Approved" | "Rejected";
 }
 
 // Define the props for the ProofList component
 interface ProofListProps {
   proofs: Proof[];
-  onUpdateProofStatus: (
-    id: string,
-    status: "Pending" | "Approved" | "Rejected"
-  ) => void;
 }
 
 // Define the ProofList component
-const ProofList: React.FC<ProofListProps> = ({
-  proofs,
-  onUpdateProofStatus,
-}) => {
+const ProofList: React.FC<ProofListProps> = ({ proofs }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [proofsList, setProofsList] = useState<Proof[]>(proofs);
 
@@ -84,32 +73,6 @@ const ProofList: React.FC<ProofListProps> = ({
     });
   };
 
-  // Function to handle proof status updates with confirmation
-  const handleUpdateProofStatus = (
-    id: string,
-    status: "Approved" | "Rejected"
-  ) => {
-    const actionText = status === "Approved" ? "approve" : "reject";
-
-    Swal.fire({
-      title: `Are you sure you want to ${actionText} this proof?`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: status === "Approved" ? "#28a745" : "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: `Yes, ${actionText} it!`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        onUpdateProofStatus(id, status);
-        Swal.fire(
-          `${status === "Approved" ? "Approved" : "Rejected"}!`,
-          `The proof has been ${actionText}ed.`,
-          "success"
-        );
-      }
-    });
-  };
-
   useEffect(() => {
     if (proofs.length === 0) {
       fetchProofs();
@@ -135,8 +98,7 @@ const ProofList: React.FC<ProofListProps> = ({
                   <CardDescription>
                     Status:{" "}
                     <Badge variant={proof.status}>
-                      {statusDisplayMap[proof.status]}{" "}
-                      {/* Use Badge for status */}
+                      {statusDisplayMap[proof.status]}
                     </Badge>
                   </CardDescription>
                 </CardHeader>
@@ -169,32 +131,13 @@ const ProofList: React.FC<ProofListProps> = ({
                     <p className="text-gray-400">No file available</p>
                   )}
                 </CardContent>
-
                 <CardFooter>
                   <div className="flex gap-2">
-                    <Button
-                      className="bg-green-600 hover:bg-green-700 p-2 rounded-md flex items-center"
-                      onClick={() =>
-                        handleUpdateProofStatus(proof.id, "Approved")
-                      }
-                    >
-                      <AiOutlineCheck className="mr-1" />
-                      <span className="hidden md:inline">Approve</span>
-                    </Button>
-                    <Button
-                      className="bg-red-600 hover:bg-red-700 p-2 rounded-md flex items-center"
-                      onClick={() =>
-                        handleUpdateProofStatus(proof.id, "Rejected")
-                      }
-                    >
-                      <AiOutlineClose className="mr-1" />
-                      <span className="hidden md:inline">Reject</span>
-                    </Button>
                     <Button
                       className="bg-red-600 hover:bg-red-700 p-2 rounded-md flex items-center"
                       onClick={() => handleDeleteProof(proof.id, proof.fileUrl)}
                     >
-                      <AiOutlineDelete className="mr-1" />
+                      <AiOutlineDelete className="mr-0" />
                       <span className="hidden md:inline">Delete</span>
                     </Button>
                   </div>

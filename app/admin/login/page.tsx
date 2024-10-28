@@ -17,6 +17,8 @@ import {
   loginWithEmailAndPassword,
   getLoggedInUser,
 } from "@/lib/utils/appwrite";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -33,6 +35,7 @@ const Login = () => {
         const user = await getLoggedInUser();
         if (user) {
           console.info("User is already logged in, redirecting to dashboard.");
+          toast.info("Redirecting to the dashboard...");
           router.replace("/admin/dashboard");
         }
       } catch (error) {
@@ -55,11 +58,18 @@ const Login = () => {
     try {
       const session = await loginWithEmailAndPassword(email, password);
       if (session.userId) {
-        console.info("Login successful, redirecting to admin dashboard.");
-        router.replace("/admin/dashboard");
+        toast.success("Login successful, redirecting to dashboard...");
+
+        // Adding a 3-second delay before navigating
+        setTimeout(() => {
+          router.replace("/admin/dashboard");
+        }, 3000);
       }
     } catch (err) {
-      setError((err as any)?.message || "Login failed. Please try again.");
+      const errorMessage =
+        (err as any)?.message || "Login failed. Please try again.";
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -72,6 +82,7 @@ const Login = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
     >
+      <ToastContainer position="top-center" autoClose={3000} />
       <motion.section
         className="flex flex-1 items-center justify-center text-center py-4"
         initial={{ y: -100, opacity: 0 }}

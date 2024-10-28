@@ -25,6 +25,7 @@ import {
 } from "@/lib/utils/appwrite"; // Ensure you have these utility functions
 import TableContent from "../task-management/TableContent"; // Import TableContent component
 import withAuth from "@/app/hoc/withAuth";
+import { Card } from "@/components/ui/card"; // Import Shadcn Card component
 
 // Task interface remains the same
 interface Task {
@@ -170,65 +171,79 @@ const Page = () => {
               animate="visible"
               variants={formVariants}
             >
-              <Form onSubmit={handleSubmit(onSubmit)}>
-                <FormItem>
-                  <FormLabel htmlFor="title">Task Title</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="title"
-                      {...register("title")}
-                      required
-                      placeholder="Enter task title"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-                <FormItem>
-                  <FormLabel htmlFor="description">Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="description"
-                      {...register("description")}
-                      placeholder="Enter task description"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-                <FormItem>
-                  <FormLabel htmlFor="member">Assigned Member</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="member"
-                      {...register("member")}
-                      required
-                      placeholder="Assign a member"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-                <FormItem>
-                  <FormLabel htmlFor="deadline">Deadline</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="deadline"
-                      type="date"
-                      {...register("deadline")}
-                      required
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+              <Card className="p-4 bg-gray-800 border border-gray-700 rounded-lg">
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                  <FormItem>
+                    <FormLabel className="text-gray-200" htmlFor="title">
+                      Task Title
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        id="title"
+                        {...register("title")}
+                        required
+                        placeholder="Enter task title"
+                        className="bg-gray-700 text-gray-200 placeholder-gray-500" // Input styling
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                  <FormItem>
+                    <FormLabel className="text-gray-200" htmlFor="description">
+                      Description
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        id="description"
+                        {...register("description")}
+                        placeholder="Enter task description"
+                        className="bg-gray-700 text-gray-200 placeholder-gray-500" // Input styling
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                  <FormItem>
+                    <FormLabel className="text-gray-200" htmlFor="member">
+                      Assigned Member
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        id="member"
+                        {...register("member")}
+                        required
+                        placeholder="Assign a member"
+                        className="bg-gray-700 text-gray-200 placeholder-gray-500" // Input styling
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                  <FormItem>
+                    <FormLabel className="text-gray-200" htmlFor="deadline">
+                      Deadline
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        id="deadline"
+                        type="date"
+                        {...register("deadline")}
+                        required
+                        className="bg-gray-700 text-gray-200 placeholder-gray-500" // Input styling
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
 
-                <Button
-                  type="submit"
-                  className="mt-4 bg-blue-600 hover:bg-blue-700"
-                >
-                  <AiOutlinePlus className="mr-2" /> Create Task
-                </Button>
-              </Form>
+                  <Button
+                    type="submit"
+                    className="mt-4 bg-blue-600 hover:bg-blue-700 text-gray-200" // Button styling
+                  >
+                    <AiOutlinePlus className="mr-2" /> Create Task
+                  </Button>
+                </Form>
+              </Card>
             </motion.div>
           </FormProvider>
-
+          <br />
           <TableContent tasks={tasks} onDeleteTask={handleDeleteTask} />
         </div>
       </div>

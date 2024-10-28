@@ -91,6 +91,31 @@ export const getTasks = async (): Promise<Task[]> => {
   }
 };
 
+// Function to update the status of a task
+export const ProgressCompleteTaskStatus = async (
+  taskId: string,
+  newStatus: "inProgress" | "complete"
+): Promise<void> => {
+  try {
+    const response = await databases.updateDocument(
+      process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID as string, // Your Appwrite database ID
+      process.env.NEXT_PUBLIC_APPWRITE_TASK_COLLECTION_ID as string, // Your Task collection ID
+      taskId, // ID of the task to update
+      {
+        status: newStatus, // Update the status field
+      }
+    );
+
+    console.log("Task updated successfully:", response);
+  } catch (error) {
+    console.error(
+      "Failed to update task status:",
+      error instanceof Error ? error.message : error
+    );
+    throw error; // Propagate the error to be handled elsewhere
+  }
+};
+
 // Function to create a new task
 export const createTask = async (taskData: {
   title: string;
@@ -376,7 +401,6 @@ export const deleteProofAndFile = async (fileId: string, proofId: string) => {
     throw error; // Propagate the error to be handled elsewhere
   }
 };
-
 
 // Function to update proof status in the database collection
 export const updateProofStatus = async (

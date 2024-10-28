@@ -25,10 +25,6 @@ const Page = () => {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  const addProof = () => {
-    // Logic to add a proof
-  };
-
   // Handle adding a new notification
   const handleAddNotification = () => {
     // Logic to handle adding notifications
@@ -79,9 +75,6 @@ const Page = () => {
 
           {/* Notification list to display current notifications */}
           <NotificationList onDeleteNotification={handleDeleteNotification} />
-
-          {/* Proof form and list components */}
-          <ProofForm onAddProof={addProof} />
 
           {/* ProofList component */}
           <ProofList

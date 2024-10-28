@@ -3,13 +3,7 @@ import { getNotifications, deleteNotification } from "@/lib/utils/appwrite"; // 
 import { Button } from "@/components/ui/button";
 import { AiOutlineDelete, AiOutlineBell } from "react-icons/ai"; // Import icons
 import Swal from "sweetalert2"; // Import SweetAlert2
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card"; // Import Card components
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // Import Card components
 import { Badge, statusDisplayMap } from "@/components/ui/badge"; // Import Badge and statusDisplayMap
 
 interface Notification {
