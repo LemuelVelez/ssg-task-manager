@@ -169,7 +169,7 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
             <AiOutlineLeft className="mr-2" />
             Previous
           </Button>
-          <span className="text-sm font-normal">
+          <span className="text-xs sm:text-sm md:text-base lg:text-lg font-normal">
             Page {currentPage} of {totalPages}
           </span>
           <Button
