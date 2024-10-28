@@ -1,40 +1,21 @@
-"use client"; // This ensures the component runs on the client side
-
-import localFont from "next/font/local";
-import { motion } from "framer-motion"; // Import motion directly from framer-motion
+import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-// Local fonts
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/theme-provider";
 
-// Create a client component for animations
-const ClientAnimationWrapper = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }} // Initial animation state
-      animate={{ opacity: 1, y: 0 }} // Final state after animation
-      exit={{ opacity: 0, y: 50 }} // Animation on exit
-      transition={{ duration: 0.6, ease: "easeInOut" }} // Smooth transition duration and easing
-    >
-      {children}
-    </motion.div>
-  );
+const fontSans = Plus_Jakarta_Sans({ 
+  subsets: ["latin"],
+  weight: ["300","400", "500", "600", "700"],
+  variable: "--font-sans",
+ });
+
+export const metadata: Metadata = {
+  title: "SSG | Task Manager",
+  description: "Manage tasks and members of the SSG.",
 };
 
-// Root layout component
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,12 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* Use the client animation wrapper for the page content */}
-        <ClientAnimationWrapper>{children}</ClientAnimationWrapper>
-      </body>
+      <body className={cn('min-h-screen bg-dark-300 font-sans antialiased', fontSans.variable, 'dark:bg-dark')}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+          >
+            {children}
+          </ThemeProvider>
+          </body>
     </html>
   );
 }
