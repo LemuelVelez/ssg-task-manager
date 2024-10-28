@@ -170,7 +170,7 @@ const TableContent: React.FC<TableContentProps> = ({ tasks, onDeleteTask }) => {
             Previous
           </Button>
           <span className="text-xs sm:text-sm md:text-base lg:text-lg font-normal">
-            Page {currentPage} of {totalPages}
+            {currentPage} of {totalPages}
           </span>
           <Button
             onClick={() => handlePageChange(currentPage + 1)}
