@@ -67,6 +67,7 @@ const ProofForm: React.FC<ProofFormProps> = ({ onAddProof }) => {
         status: "Pending" as const,
       };
 
+      const proofResponse = await createProofs(proofData);
       onAddProof(newProofFile, newProofType, newProofDescription, "Pending");
 
       setNewProofFile(null);
