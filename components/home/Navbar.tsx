@@ -7,8 +7,10 @@ const Navbar = () => {
 
   return (
     <nav className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200">
-      <div className="flex items-center">
-      <span className="ml-4 text-lg sm:text-xl font-bold">SSG Task Management</span>
+      <div className="flex items-center p-2 md:p-4">
+        <span className="text-lg sm:text-xl font-bold">
+          SSG Task Management
+        </span>
       </div>
       <div className="flex items-center space-x-4">
         {/* Navigation Links */}
