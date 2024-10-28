@@ -83,7 +83,7 @@ export default function Home() {
             {
               icon: (
                 <HiOutlineClipboardList
-                  className="text-blue-400 mr-3"
+                  className="text-blue-400 mb-2" // Adjusted to provide some margin below the icon
                   size={24}
                 />
               ),
@@ -93,26 +93,26 @@ export default function Home() {
             },
             {
               icon: (
-                <HiOutlineUpload className="text-blue-400 mr-3" size={24} />
+                <HiOutlineUpload className="text-blue-400 mb-2" size={24} />
               ),
               text: "Upload proof of duty with selfies.",
               bgImage:
                 "url('https://www.bakemyweb.com/files/public/de/69/2770cae8aabc7706c58dde69/i/af/bc/64f1b7f4c4d470001e9aafbc/original?name=24.gif-upload.gif&mimetype=image/gif&cd=inline')",
             },
             {
-              icon: <FaUserCheck className="text-blue-400 mr-3" size={24} />,
+              icon: <FaUserCheck className="text-blue-400 mb-2" size={24} />,
               text: "Submit proof of task completion.",
               bgImage:
                 "url('https://images.squarespace-cdn.com/content/v1/53ff9831e4b0b1b06904c5e0/1500458601856-F8KLCDANJAPXEA0FIONA/SubmitButtonAnimation.gif?format=1500w')",
             },
             {
-              icon: <MdOfflineBolt className="text-blue-400 mr-3" size={24} />,
+              icon: <MdOfflineBolt className="text-blue-400 mb-2" size={24} />,
               text: "Access Online.",
               bgImage:
                 "url('https://www.cliksoftware.com/wp-content/uploads/2022/07/Syncing-to-Clik-Jobs.gif')",
             },
             {
-              icon: <MdCheckCircle className="text-blue-400 mr-3" size={24} />,
+              icon: <MdCheckCircle className="text-blue-400 mb-2" size={24} />,
               text: "Admin approval system for submissions.",
               bgImage:
                 "url('https://media.licdn.com/dms/image/v2/D4E12AQHpwhoS6Z8RJw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1659450566928?e=1734566400&v=beta&t=O6uCBMxc6BDISN2PrJeEHUCmgAQMiIrGaJ44GM56zcE')",
@@ -132,9 +132,11 @@ export default function Home() {
               initial="hidden"
               animate="visible"
             >
-              <div className="bg-gray-700 bg-opacity-60 p-4 rounded-lg flex items-center w-full">
+              <div className="bg-gray-700 bg-opacity-60 p-4 rounded-lg flex flex-col items-center justify-center w-full h-full">
                 {feature.icon}
-                <span className="text-sm sm:text-base">{feature.text}</span>
+                <span className="text-sm sm:text-base text-center">
+                  {feature.text}
+                </span>
               </div>
             </motion.div>
           ))}
