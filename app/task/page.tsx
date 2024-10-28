@@ -115,7 +115,7 @@ const Page = () => {
                         )}
                       </h3>
                       {items.map((item, index) => (
-                        <div key={index} className="text-gray-400 text-sm py-1">
+                        <div key={index} className="text-gray-400 text-xs py-1">
                           {item}
                         </div>
                       ))}
@@ -123,7 +123,7 @@ const Page = () => {
                   ))}
 
                   {totalNotifications === 0 && (
-                    <div className="text-gray-400 text-sm">
+                    <div className="text-gray-400 text-xs">
                       No notifications available
                     </div>
                   )}
