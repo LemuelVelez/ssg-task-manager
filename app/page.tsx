@@ -107,7 +107,7 @@ export default function Home() {
             },
             {
               icon: <MdOfflineBolt className="text-blue-400 mr-3" size={24} />,
-              text: "Access offline and sync when online.",
+              text: "Access Online.",
               bgImage:
                 "url('https://www.cliksoftware.com/wp-content/uploads/2022/07/Syncing-to-Clik-Jobs.gif')",
             },
