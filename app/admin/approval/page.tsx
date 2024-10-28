@@ -5,7 +5,6 @@ import Navbar from "../../../components/Navbar";
 import Sidebar from "../../../components/Sidebar";
 import NotificationForm from "./NotificationForm";
 import NotificationList from "./NotificationList";
-import ProofForm from "./ProofForm";
 import ProofList from "./ProofList";
 import withAuth from "@/app/hoc/withAuth";
 import { updateProofStatus, getProofs } from "@/lib/utils/appwrite"; // Import necessary Appwrite functions

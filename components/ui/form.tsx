@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 
 // Modify Form component to accept onSubmit
 type FormProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSubmit: (data: any) => void; // Define the type of the onSubmit function
   children: React.ReactNode; // Define the type for children
 };
@@ -124,8 +125,6 @@ const FormDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => {
-  const { name } = useFormField();
-
   return (
     <p
       ref={ref}

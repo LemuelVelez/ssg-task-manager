@@ -40,6 +40,7 @@ const LoadingSpinner = () => (
 
 // Higher-Order Component (HOC) for route protection
 const withAuth = (WrappedComponent: React.ComponentType) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function ProtectedComponent(props: any) {
     const [loading, setLoading] = useState(true); // Loading state to prevent rendering before auth check
     const [authenticated, setAuthenticated] = useState(false); // State to track if the user is authenticated

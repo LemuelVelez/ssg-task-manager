@@ -30,7 +30,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
         const fetchedNotifications = await getNotifications();
         setNotifications(fetchedNotifications);
         setLoading(false);
-      } catch (err) {
+      } catch (error) {
         setError("Failed to fetch notifications");
         setLoading(false);
       }

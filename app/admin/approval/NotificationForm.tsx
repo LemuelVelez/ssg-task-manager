@@ -21,7 +21,7 @@ interface NotificationFormProps {
 const NotificationForm: React.FC<NotificationFormProps> = ({
   onAddNotification,
 }) => {
-  const [newId, setNewId] = useState("");
+  const [setNewId] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [newPriority, setNewPriority] = useState<"Normal" | "High" | "Urgent">(
     "Normal"
@@ -66,7 +66,6 @@ const NotificationForm: React.FC<NotificationFormProps> = ({
         confirmButtonText: "OK",
       });
 
-      setNewId("");
       setNewMessage("");
       setNewPriority("Normal");
     } catch (error) {

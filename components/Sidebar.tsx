@@ -1,6 +1,7 @@
 import { FaHome, FaListAlt, FaClipboardCheck } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -9,7 +10,7 @@ const Sidebar = () => {
     <aside className="bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 h-full flex flex-col text-gray-200 w-16 sm:w-1/4 md:w-48 lg:w-64">
       {/* Logo and Header - Header text is hidden on small screens */}
       <div className="flex flex-col items-center p-4">
-        <img
+        <Image
           src="/icons/logo.svg"
           alt="Logo"
           className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-full aspect-square"

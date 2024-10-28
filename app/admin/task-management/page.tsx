@@ -69,7 +69,7 @@ const Page = () => {
   }, []);
 
   const onSubmit: SubmitHandler<Omit<Task, "id" | "status">> = async (data) => {
-    const { title, member, deadline, description } = data;
+    const { title, member, deadline } = data;
 
     if (!title || !member || !deadline) {
       alert("Please fill in all required fields.");

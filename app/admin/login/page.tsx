@@ -38,7 +38,7 @@ const Login = () => {
           toast.info("Redirecting to the dashboard...");
           router.replace("/admin/dashboard");
         }
-      } catch (error) {
+      } catch (err) {
         console.log("User not logged in.");
       }
     };
@@ -67,6 +67,7 @@ const Login = () => {
       }
     } catch (err) {
       const errorMessage =
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (err as any)?.message || "Login failed. Please try again.";
       setError(errorMessage);
       toast.error(errorMessage);

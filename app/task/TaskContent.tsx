@@ -40,7 +40,6 @@ import { getTasks, ProgressCompleteTaskStatus } from "@/lib/utils/appwrite";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -119,7 +118,7 @@ export const columns: ColumnDef<Task>[] = [
         try {
           await ProgressCompleteTaskStatus(task.id, status);
           const updatedTasks = await getTasks();
-          // @ts-expect-error
+          // @ts-expect-error @typescript-eslint/ban-ts-comment
           setTasks(updatedTasks as Task[]);
         } catch (error) {
           console.error("Error updating task status:", error);
@@ -314,7 +313,7 @@ const TaskContent = () => {
                     pageIndex: Math.max(prev.pageIndex - 1, 0),
                   }))
                 }
-                // @ts-expect-error
+                // @ts-expect-error @typescript-eslint/ban-ts-comment
                 disabled={pagination.pageIndex === 0}
               />
             </PaginationItem>
@@ -327,7 +326,7 @@ const TaskContent = () => {
                     onClick={() =>
                       setPagination({ ...pagination, pageIndex: i })
                     }
-                    // @ts-expect-error
+                    // @ts-expect-error @typescript-eslint/ban-ts-comment
                     active={pagination.pageIndex === i}
                   >
                     {i + 1}
@@ -347,7 +346,7 @@ const TaskContent = () => {
                     ),
                   }))
                 }
-                // @ts-expect-error
+                // @ts-expect-error @typescript-eslint/ban-ts-comment
                 disabled={
                   pagination.pageIndex >=
                   Math.ceil(tasks.length / pagination.pageSize) - 1

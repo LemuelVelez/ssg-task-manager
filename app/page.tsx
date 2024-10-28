@@ -74,7 +74,7 @@ export default function Home() {
         </motion.h2>
         <p className="max-w-3xl mx-auto text-lg">
           The SSG Task Management System provides a streamlined platform to
-          assign, monitor, and track tasks, ensuring officers' active
+          assign, monitor, and track tasks, ensuring officers&apos; active
           participation and duty submissions with ease.
         </p>
       </section>

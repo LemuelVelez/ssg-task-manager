@@ -14,6 +14,7 @@ import { getProofs, deleteProofAndFile } from "@/lib/utils/appwrite"; // Import 
 import { AiOutlineDelete } from "react-icons/ai";
 import { Button } from "./ui/button";
 import { Badge, statusDisplayMap } from "./ui/badge"; // Import the Badge component
+import Image from "next/image";
 
 // Define the Proof interface
 interface Proof {
@@ -110,7 +111,7 @@ const ProofList: React.FC<ProofListProps> = ({ proofs }) => {
                       rel="noopener noreferrer"
                       className="block max-w-xs"
                     >
-                      <img
+                      <Image
                         src={proof.fileUrl}
                         alt="Proof"
                         className="w-full h-auto object-cover rounded-md"
