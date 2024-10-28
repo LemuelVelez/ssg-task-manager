@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import Navbar from "../../../components/Navbar";
 import Sidebar from "../../../components/Sidebar";
 import withAuth from "@/app/hoc/withAuth";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
 import { CardContent, CardDescription, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getTasks } from "@/lib/utils/appwrite";
@@ -63,11 +61,6 @@ const Dashboard = () => {
 
     fetchTasks();
   }, []);
-
-  const Target3D = () => {
-    const { scene } = useGLTF("/models/Target.glb");
-    return <primitive object={scene} scale={3} position={[0, -1, 0]} />;
-  };
 
   return (
     <div className="relative flex h-screen overflow-hidden bg-gray-900 text-gray-200">
@@ -128,12 +121,6 @@ const Dashboard = () => {
             )}
           </div>
         </motion.div>
-        <Canvas className="absolute inset-0 z-0">
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[5, 5, 5]} />
-          <OrbitControls enableZoom={false} />
-          <Target3D />
-        </Canvas>
       </div>
     </div>
   );
