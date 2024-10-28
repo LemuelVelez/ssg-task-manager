@@ -76,11 +76,12 @@ const Page = () => {
         <div className="absolute top-4 right-4">
           <div className="relative">
             <FaBell
-              className={`text-blue-400 cursor-pointer text-lg sm:text-2xl ${
+              className={`text-blue-400 cursor-pointer text-xl sm:text-3xl lg:text-4xl ${
                 highlightNotification ? "text-red-500" : ""
               }`}
               onClick={handleNotificationClick}
             />
+
             {totalNotifications > 0 && (
               <span className="absolute top-0 right-0 -mt-1 -mr-1 px-1 py-0.5 bg-red-500 text-xs font-bold text-white rounded-full">
                 {totalNotifications}
