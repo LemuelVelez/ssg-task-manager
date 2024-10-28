@@ -117,9 +117,7 @@ export const columns: ColumnDef<Task>[] = [
       const handleStatusChange = async (status: "inProgress" | "complete") => {
         try {
           await ProgressCompleteTaskStatus(task.id, status);
-          const updatedTasks = await getTasks();
-          // @ts-expect-error @typescript-eslint/ban-ts-comment
-          setTasks(updatedTasks as Task[]);
+          window.location.reload(); // Reloads to update tasks without modifying the original code
         } catch (error) {
           console.error("Error updating task status:", error);
         }
@@ -290,9 +288,9 @@ const TaskContent = () => {
                   <TableRow>
                     <TableCell
                       colSpan={columns.length}
-                      className="h-24 text-center text-gray-500"
+                      className="h-24 text-center text-gray-200"
                     >
-                      No tasks available.
+                      No results.
                     </TableCell>
                   </TableRow>
                 )}
@@ -300,7 +298,6 @@ const TaskContent = () => {
             </Table>
           </div>
         </CardContent>
-
         {/* Pagination Controls */}
         <Pagination>
           <PaginationContent>
