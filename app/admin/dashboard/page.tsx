@@ -66,7 +66,7 @@ const Dashboard = () => {
 
   const Target3D = () => {
     const { scene } = useGLTF("/models/Target.glb");
-    return <primitive object={scene} scale={5} position={[0, -1, 0]} />;
+    return <primitive object={scene} scale={3} position={[0, -1, 0]} />;
   };
 
   return (
