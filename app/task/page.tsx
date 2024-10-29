@@ -76,7 +76,7 @@ const Page = () => {
         <div className="absolute top-4 right-4">
           <div className="relative">
             <FaBell
-              className={`text-blue-400 cursor-pointer text-4xl sm:text-2xl lg:text-4xl ${
+              className={`text-blue-400 cursor-pointer text-3xl sm:text-3xl lg:text-3xl ${
                 highlightNotification ? "text-red-500" : ""
               }`}
               onClick={handleNotificationClick}

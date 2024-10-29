@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <nav className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200">
       <div className="flex items-center p-2 md:p-4">
-        <span className="text-lg sm:text-xl font-bold">
+        <span className="lg:text-3xl sm:text-xs font-bold">
           SSG Task Management
         </span>
       </div>
@@ -20,7 +20,8 @@ const Navbar = () => {
               pathname === "/" ? "bg-gray-700" : ""
             }`}
           >
-            <FaHome /> {/* Home icon */}
+            <FaHome className="text-2xl sm:text-2xl lg:text-2xl" />{" "}
+            {/* Home icon */}
             <span className="hidden md:inline">Home</span>{" "}
             {/* Hide text on small screens */}
           </li>
@@ -31,7 +32,8 @@ const Navbar = () => {
               pathname === "/proof" ? "bg-gray-700" : ""
             }`}
           >
-            <FaClipboardCheck /> {/* Proof of Duty Submission icon */}
+            <FaClipboardCheck className="text-2xl sm:text-2xl lg:text-2xl" />{" "}
+            {/* Proof of Duty Submission icon */}
             <span className="hidden md:inline">Proof</span>{" "}
             {/* Hide text on small screens */}
           </li>
@@ -42,7 +44,8 @@ const Navbar = () => {
               pathname === "/task" ? "bg-gray-700" : ""
             }`}
           >
-            <FaTasks /> {/* Task Submission Proof icon */}
+            <FaTasks className="text-2xl sm:text-2xl lg:text-2xl" />{" "}
+            {/* Task Submission Proof icon */}
             <span className="hidden md:inline">Task</span>{" "}
             {/* Hide text on small screens */}
           </li>
