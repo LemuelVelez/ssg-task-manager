@@ -2,7 +2,7 @@
 
 ## Overview
 
-This web application is designed to assist the Supreme Student Government (SSG) in managing tasks, tracking attendance, and monitoring member participation. It allows for seamless task assignment, proof of duty (via selfies), and task submission tracking, all within an intuitive and mobile-friendly interface. The system also includes offline functionality to ensure accessibility and continuity even without internet access.
+This web application is designed to assist the Supreme Student Government (SSG) in managing tasks, tracking attendance, and monitoring member participation. It allows for seamless task assignment, proof of duty (via selfies), and task submission tracking, all within an intuitive and mobile-friendly interface.
 
 The app empowers the SSG President to assign and monitor tasks, approve member submissions, and ensure that members remain actively engaged in their responsibilities.
 
@@ -21,24 +21,33 @@ The app empowers the SSG President to assign and monitor tasks, approve member s
 - **Overdue Task Alerts:** Notifications are sent to members when their tasks are overdue.
 - **Task Deadline Reminders:** Members receive reminders of upcoming task deadlines.
 
-### 4. Offline Functionality
-- The system supports offline access, allowing members to view tasks and upload proofs even without an internet connection. Data syncs when online access is restored.
-
-### 5. Mobile-Friendly Design
+### 4. Mobile-Friendly Design
 - The application is responsive, ensuring a smooth experience on both desktop and mobile devices for members and administrators.
 
 ## Tech Stack
 
 ### Frontend
-- **Next.js:** For server-side rendering and building the React-based frontend.
-- **Shadcn UI:** Provides UI components.
-- **Tailwind CSS:** Handles styling.
-- **Framer Motion:** Adds animations and smooth transitions.
-- **TypeScript:** Ensures type safety and a better development experience.
+- **Next.js (v14.2.15):** For server-side rendering and building the React-based frontend.
+- **Shadcn UI (v0.9.2):** Provides UI components.
+- **MUI (Material-UI) (v6.1.4):** For UI components and styling.
+- **Framer Motion (v11.11.8):** Adds animations and smooth transitions.
+- **Tailwind CSS (v3.4.14):** Handles styling.
+- **TypeScript (v5.6.3):** Ensures type safety and a better development experience.
+- **React (v18.3.1):** JavaScript library for building user interfaces.
+- **React Router DOM (v6.27.0):** For routing and navigation.
+- **React Hook Form (v7.53.1):** For managing form state and validation.
+- **React Icons (v5.3.0):** Provides a set of popular icons.
+- **React Toastify (v10.0.6):** For notifications and alerts.
+- **SweetAlert2 (v11.14.4):** For beautiful alerts and confirmations.
 
 ### Backend
-- **Appwrite:** Manages the database, authentication, file storage, and notifications.
+- **Appwrite (v16.0.2):** Manages the database, authentication, file storage, and notifications.
 - **Node.js:** Powers server-side logic for task management, file uploads, and notifications.
+
+### Build Tools
+- **PostCSS (v8.4.47):** For processing CSS.
+- **Autoprefixer (v10.4.20):** Adds vendor prefixes to CSS rules.
+- **ESLint (v8.57.1):** Linting utility for JavaScript and TypeScript.
 
 ## Installation and Setup
 
@@ -115,7 +124,7 @@ The app empowers the SSG President to assign and monitor tasks, approve member s
 ### Members
 1. **View Assigned Tasks**: Members can view all tasks assigned to them, including deadlines and progress tracking.
 2. **Submit Proofs**: Upload selfies as proof of attendance and submit documents to show task completion.
-3. **Work Offline**: View tasks and submit proofs while offline, with data syncing once back online.
+3. **Work Online**: View tasks and submit proofs online.
 
 ## Contributing
 
