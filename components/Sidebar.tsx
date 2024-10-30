@@ -16,7 +16,7 @@ const Sidebar = () => {
     <aside
       className={`fixed top-0 left-0 h-full bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 w-64 md:w-64 lg:w-64 flex flex-col`}
+      } transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 w-56 md:w-60 lg:w-64 flex flex-col`} // Adjusted width
     >
       {/* Close Button for Mobile */}
       <div className="absolute top-4 right-4 md:hidden">
@@ -32,7 +32,7 @@ const Sidebar = () => {
           height={100}
           width={100}
           alt="Logo"
-          className="h-8 w-8 sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-full aspect-square"
+          className="h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-full aspect-square"
         />
         <span className="font-semibold text-sm sm:text-base md:text-lg lg:text-xl mt-2">
           Admin Dashboard
@@ -50,8 +50,8 @@ const Sidebar = () => {
               }`}
               onClick={toggleSidebar} // Close sidebar on link click
             >
-              <FaHome className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
-              <span className="text-xs sm:text-sm md:text-base lg:text-lg">
+              <FaHome className="text-blue-400 text-xl sm:text-2xl" />
+              <span className="text-sm sm:text-base md:text-lg lg:text-xl">
                 Dashboard
               </span>
             </Link>
@@ -64,8 +64,8 @@ const Sidebar = () => {
               }`}
               onClick={toggleSidebar} // Close sidebar on link click
             >
-              <FaListAlt className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
-              <span className="text-xs sm:text-sm md:text-base lg:text-lg">
+              <FaListAlt className="text-blue-400 text-xl sm:text-2xl" />
+              <span className="text-sm sm:text-base md:text-lg lg:text-xl">
                 Task Management
               </span>
             </Link>
@@ -78,8 +78,8 @@ const Sidebar = () => {
               }`}
               onClick={toggleSidebar} // Close sidebar on link click
             >
-              <FaClipboardCheck className="text-blue-400 text-lg sm:text-xl md:text-2xl" />
-              <span className="text-xs sm:text-sm md:text-base lg:text-lg">
+              <FaClipboardCheck className="text-blue-400 text-xl sm:text-2xl" />
+              <span className="text-sm sm:text-base md:text-lg lg:text-xl">
                 Approval & Notification
               </span>
             </Link>
