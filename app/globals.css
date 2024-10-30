@@ -31,3 +31,7 @@ body {
     justify-content: center; /* Center horizontally */
   }
 }
+
+.transition-width {
+  transition: width 0.3s ease-in-out;
+}

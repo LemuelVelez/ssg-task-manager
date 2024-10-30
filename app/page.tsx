@@ -24,7 +24,14 @@ const motionVariants = {
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 overflow-hidden">
+    <div
+      className="flex flex-col min-h-screen bg-gradient-to-r from-blue-800 via-purple-900 to-gray-900 text-gray-200 overflow-hidden bg-opacity-70"
+      style={{
+        backgroundImage: "url(/images/background.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       {/* Navbar */}
       <Navbar /> {/* Include the Navbar here */}
       {/* Masthead Section */}
