@@ -80,12 +80,20 @@ The app empowers the SSG President to assign and monitor tasks, approve member s
    - Create a project in Appwrite.
    - Set up your database to handle task assignments, file storage, and user authentication.
 
-5. Create a `.env.local` file and add the following environment variables:
+5. Create a `.env.local` file and add the following environment variables (ensure all sensitive information is correctly set up in your environment variables):
 
-   ```bash
-   NEXT_PUBLIC_APPWRITE_PROJECT_ID=your_appwrite_project_id
-   NEXT_PUBLIC_APPWRITE_ENDPOINT=your_appwrite_endpoint
-   NEXT_PUBLIC_APPWRITE_API_KEY=your_appwrite_api_key
+   ```plaintext
+   NEXT_PUBLIC_APPWRITE_ENDPOINT=[your_appwrite_endpoint]
+   NEXT_PUBLIC_APPWRITE_PROJECT_ID=[your_appwrite_project_id]
+   NEXT_PUBLIC_APPWRITE_DATABASE_ID=[your_database_id]
+   NEXT_PUBLIC_APPWRITE_BUCKET_ID=[your_bucket_id]
+   NEXT_PUBLIC_GOOGLE_CLIENT_ID=[your_google_client_id]
+   NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=[your_google_client_secret]
+   NEXT_PUBLIC_APPWRITE_API_KEY=[your_appwrite_api_key]
+   NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID=[your_users_collection_id]
+   NEXT_PUBLIC_APPWRITE_TASK_COLLECTION_ID=[your_task_collection_id]
+   NEXT_PUBLIC_APPWRITE_NOTIFICATION_COLLECTION_ID=[your_notification_collection_id]
+   NEXT_PUBLIC_APPWRITE_PROOFS_COLLECTION_ID=[your_proofs_collection_id]
    ```
 
 6. Run the application:
@@ -125,6 +133,26 @@ The app empowers the SSG President to assign and monitor tasks, approve member s
 1. **View Assigned Tasks**: Members can view all tasks assigned to them, including deadlines and progress tracking.
 2. **Submit Proofs**: Upload selfies as proof of attendance and submit documents to show task completion.
 3. **Work Online**: View tasks and submit proofs online.
+
+## Screenshots
+
+### Landing Page
+![Landing Page](screenshots/taskmanager.png)
+![Landing Page](screenshots/taskmanager1.png)
+
+### Admin Login
+![Login](screenshots/#taskmanger2.png)
+
+### Dashboard
+![Dashboard](screenshots/#taskmanager5.png)
+![Task Management](screenshots/#taskmanager6.png)
+![Approval & Notification](screenshots/#taskmanager7.png)
+
+### Task Management
+![Tasks](screenshots/#taskmanager4.png)
+
+### Proof of Duty Upload
+![Proof of Duty Upload](screenshots/#taskmanager3.png)
 
 ## Contributing
 
