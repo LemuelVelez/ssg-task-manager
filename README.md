@@ -137,22 +137,22 @@ The app empowers the SSG President to assign and monitor tasks, approve member s
 ## Screenshots
 
 ### Landing Page
-![Landing Page](screenshots/taskmanager.png)
-![Landing Page](screenshots/taskmanager1.png)
+![Landing Page](/public/screenshots/taskmanager.png)
+![Landing Page](/public/screenshots/taskmanager1.png)
 
 ### Admin Login
-![Login](screenshots/#taskmanger2.png)
+![Login](/public/screenshots/taskmanger2.png)
 
 ### Dashboard
-![Dashboard](screenshots/#taskmanager5.png)
-![Task Management](screenshots/#taskmanager6.png)
-![Approval & Notification](screenshots/#taskmanager7.png)
+![Dashboard](/public/screenshots/taskmanager5.png)
+![Task Management](/public/screenshots/taskmanager6.png)
+![Approval & Notification](/public/screenshots/taskmanager7.png)
 
-### Task Management
-![Tasks](screenshots/#taskmanager4.png)
+### Assigned Tasks
+![Tasks](/public/screenshots/taskmanager4.png)
 
-### Proof of Duty Upload
-![Proof of Duty Upload](screenshots/#taskmanager3.png)
+### Proof of Duty
+![Proof of Duty](/public/screenshots/taskmanager3.png)
 
 ## Contributing
 
